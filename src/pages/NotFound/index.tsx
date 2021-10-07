@@ -1,10 +1,11 @@
 import React, { FC, memo } from 'react';
 import { PageWrapper } from '@Components/pageWrapper';
+import notFound from '@Assets/images/404.png';
 
-export const Profile: FC = memo(() => {
+export const NotFound: FC = memo(() => {
   return (
     <PageWrapper>
-      PROFILE
+      <img src={notFound} alt=""/>
     </PageWrapper>
   );
 });

@@ -1,12 +1,27 @@
-import React, { FC, memo } from 'react';
+import React, { FC, memo, useContext } from 'react';
 import styles from './Login.module.scss';
 import { Form, Input, Button, Checkbox } from 'antd';
 import { Redirect } from 'react-router';
 import { Routes } from '@/constants/routes';
 import { PageWrapper } from '@Components/pageWrapper';
+import { FirebaseContext } from '@/index';
+import { GoogleAuthProvider, signInWithPopup,signInWithEmailAndPassword  } from '@firebase/auth';
+import { useAppDispatch } from '@/redux/store';
 
 export const Login: FC = memo(() => {
+  const dispatch = useAppDispatch();
   const isAuth = false;
+ // const { auth } = useContext(FirebaseContext);
+
+ /* const login = () => {
+      dispatch()
+  }
+*/
+  const singInWithGoogle = async () => {
+    const provider = new GoogleAuthProvider();
+   /* const { user } = await signInWithPopup(auth, provider);
+    console.log(user);*/
+  };
 
   if (isAuth) {
     return <Redirect to={Routes.PROFILE}/>;
@@ -36,8 +51,11 @@ export const Login: FC = memo(() => {
         </Form.Item>
 
         <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
-          <Button type="primary" htmlType="submit">
+          <Button type="primary" htmlType="submit" onClick={singInWithGoogle}>
             Login
+          </Button>
+          <Button type="primary" htmlType="submit" onClick={singInWithGoogle}>
+            Sign in with Google
           </Button>
         </Form.Item>
       </Form>

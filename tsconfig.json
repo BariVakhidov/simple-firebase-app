@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "jsx": "react",
-    "module": "commonjs",
+    "module": "CommonJS",
     "target": "es6",
     "baseUrl": "./src",
     "paths": {
