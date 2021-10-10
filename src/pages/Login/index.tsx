@@ -1,64 +1,72 @@
-import React, { FC, memo, useContext } from 'react';
+import React, { FC, memo } from 'react';
 import styles from './Login.module.scss';
-import { Form, Input, Button, Checkbox } from 'antd';
-import { Redirect } from 'react-router';
-import { Routes } from '@/constants/routes';
+import { Form, Input, Button, Space } from 'antd';
+import { Link } from 'react-router-dom';
 import { PageWrapper } from '@Components/pageWrapper';
-import { FirebaseContext } from '@/index';
-import { GoogleAuthProvider, signInWithPopup,signInWithEmailAndPassword  } from '@firebase/auth';
 import { useAppDispatch } from '@/redux/store';
+import { appActionCreators } from '@/redux/app/action-creators';
+import { GoogleOutlined, LockOutlined, UserOutlined } from '@ant-design/icons';
+import { withAuthRedirect } from '@/hoc/withAuthRedirect';
+import { AppTypes } from '@/redux/app/types';
 
-export const Login: FC = memo(() => {
+const Login: FC = memo(() => {
   const dispatch = useAppDispatch();
-  const isAuth = false;
- // const { auth } = useContext(FirebaseContext);
 
- /* const login = () => {
-      dispatch()
-  }
-*/
-  const singInWithGoogle = async () => {
-    const provider = new GoogleAuthProvider();
-   /* const { user } = await signInWithPopup(auth, provider);
-    console.log(user);*/
+  const login = (values: AppTypes.UserAuthParams) => {
+    dispatch(appActionCreators.login({ email: values.email, password: values.password }));
   };
-
-  if (isAuth) {
-    return <Redirect to={Routes.PROFILE}/>;
-  }
+  const singInWithGoogle = () => dispatch(appActionCreators.signInWithGoogle());
 
   return (
     <PageWrapper style={styles.login}>
-      <Form>
+      <Form
+        name="normal_login"
+        className="login-form"
+        onFinish={login}>
         <Form.Item
-          label="Username"
-          name="username"
-          rules={[{ required: true, message: 'Please input your username!' }]}
+          name="email"
+          rules={[
+            {
+              type: 'email',
+              message: 'The input is not valid E-mail!',
+            },
+            {
+              required: true,
+              message: 'Please input your E-mail!',
+            },
+          ]}
         >
-          <Input/>
+          <Input prefix={<UserOutlined className="site-form-item-icon"/>} placeholder="Email"/>
         </Form.Item>
-
         <Form.Item
-          label="Password"
           name="password"
-          rules={[{ required: true, message: 'Please input your password!' }]}
+          rules={[{ required: true, message: 'Please input your Password!' }, {
+            min: 6,
+            message: 'Password must be min 6 symbols',
+          }]}
         >
-          <Input.Password/>
+          <Input
+            prefix={<LockOutlined className="site-form-item-icon"/>}
+            type="password"
+            placeholder="Password"
+          />
+        </Form.Item>
+        <Form.Item wrapperCol={{ offset: 0, span: 16 }}>
+          <Space>
+            <Button type="primary" htmlType="submit">
+              Login
+            </Button>
+            <Button onClick={singInWithGoogle}>
+              <GoogleOutlined/>
+              Sign in with Google
+            </Button>
+            Or <Link to={'/registration'} className={styles.link}>register now!</Link>
+          </Space>
         </Form.Item>
 
-        <Form.Item name="remember" valuePropName="checked" wrapperCol={{ offset: 8, span: 16 }}>
-          <Checkbox>Remember me</Checkbox>
-        </Form.Item>
-
-        <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
-          <Button type="primary" htmlType="submit" onClick={singInWithGoogle}>
-            Login
-          </Button>
-          <Button type="primary" htmlType="submit" onClick={singInWithGoogle}>
-            Sign in with Google
-          </Button>
-        </Form.Item>
       </Form>
     </PageWrapper>
   );
 });
+
+export default withAuthRedirect(Login);

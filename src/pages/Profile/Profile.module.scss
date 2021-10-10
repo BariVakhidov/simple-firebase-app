@@ -1,0 +1,10 @@
+.icon {
+  width: 35px;
+  height: 35px;
+  font-size: 30px;
+  transition: all ease 350ms;
+  &:hover {
+    font-size: 35px;
+    cursor: pointer;
+  }
+}

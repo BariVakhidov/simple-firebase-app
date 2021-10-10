@@ -1,22 +1,16 @@
-import { compose, configureStore } from '@reduxjs/toolkit';
+import { configureStore } from '@reduxjs/toolkit';
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
 import createSagaMiddleware from 'redux-saga';
 import { rootSaga } from '@/redux/sagas';
-import { authReducer } from '@/redux/auth/reducer';
+import { appReducer } from '@/redux/app/reducer';
 
 const sagaMiddleware = createSagaMiddleware();
 
-declare global {
-  interface Window {
-    __REDUX_DEVTOOLS_EXTENSION_COMPOSE__?: typeof compose;
-  }
-}
-const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
-
 export const store = configureStore({
   reducer: {
-    auth: authReducer,
+    app: appReducer,
   },
+  devTools:  true,
   middleware: getDefaultMiddleware => getDefaultMiddleware().concat(sagaMiddleware),
 });
 sagaMiddleware.run(rootSaga);

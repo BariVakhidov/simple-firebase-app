@@ -1,0 +1,26 @@
+.header {
+  width: 100%;
+  display: flex;
+
+  .logo {
+    float: left;
+    display: flex;
+    align-items: center;
+    height: 31px;
+    margin: 16px 24px 16px 0;
+
+    img {
+      width: 30px;
+    }
+  }
+  .buttons {
+    float: right;
+    display: flex;
+    align-items: center;
+    height: 31px;
+    margin: 16px 24px 16px 0;
+  }
+  .name {
+    color: antiquewhite;
+  }
+}

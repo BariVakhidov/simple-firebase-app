@@ -5,10 +5,11 @@ const {
     getHtmlWebpackPlugin,
 } = require('./webpack/plugins/html-webpack-plugin')
 const {getCssLoader} = require('./webpack/loaders/css-loader')
-const { getStyleLoader } = require("./webpack/loaders/style-loader")
+const {getStyleLoader} = require('./webpack/loaders/style-loader')
 const {
     getMiniCssExtractPlugin,
 } = require('./webpack/plugins/mini-exstract-css')
+const Dotenv = require('dotenv-webpack');
 
 module.exports = {
     mode: NODE_ENV || PRODUCTION,
@@ -57,5 +58,5 @@ module.exports = {
             '@': path.resolve(__dirname, 'src/'),
         },
     },
-    plugins: [getHtmlWebpackPlugin(), getMiniCssExtractPlugin()],
+    plugins: [getHtmlWebpackPlugin(), getMiniCssExtractPlugin(), new Dotenv()],
 }

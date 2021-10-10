@@ -4,7 +4,7 @@ import notFound from '@Assets/images/404.png';
 
 export const NotFound: FC = memo(() => {
   return (
-    <PageWrapper>
+    <PageWrapper center>
       <img src={notFound} alt=""/>
     </PageWrapper>
   );

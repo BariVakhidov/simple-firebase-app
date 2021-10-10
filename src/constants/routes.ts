@@ -1,17 +1,13 @@
-import { Login } from '@/pages/Login';
 import { Profile } from '@/pages/Profile';
+import React from 'react';
 
 export enum Routes {
   PROFILE = '/profile',
   LOGIN = '/login',
+  REGISTRATION = '/REGISTRATION',
 }
 
 export const privateRoutes: Route[] = [
-  {
-    exact: true,
-    Component: Login,
-    path: Routes.LOGIN,
-  },
   {
     exact: true,
     Component: Profile,

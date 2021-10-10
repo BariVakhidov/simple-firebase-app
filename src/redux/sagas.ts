@@ -1,7 +1,8 @@
 import { call, fork, put } from '@redux-saga/core/effects';
-import { authSaga } from '@/redux/auth/sagas';
+import { authSaga } from '@/redux/app/sagas';
 import { AppState } from '@/redux/store';
 import { AnyAction } from 'redux';
+import { appActionCreators } from '@/redux/app/action-creators';
 
 export function* rootSaga() {
   yield fork(authSaga);
@@ -24,7 +25,7 @@ export function tryCatchSaga<A, K extends keyof AppState>(
       yield call(saga, a);
     } catch (error) {
       console.log(error);
-
+      yield put(appActionCreators.setError(error.code));
     } finally {
       if (options?.withProgress) {
         yield put(options.updateProgressAction(false));

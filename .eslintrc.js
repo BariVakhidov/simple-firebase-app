@@ -25,6 +25,7 @@ module.exports = {
 	],
 	plugins: ['import', 'react', 'promise', 'prettier'],
 	rules: {
+		"@typescript-eslint/no-namespace": "off",
 		"import/extensions": 'off',
 		'react/display-name': 0,
 		'linebreak-style': 0,
