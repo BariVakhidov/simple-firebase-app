@@ -1,6 +1,6 @@
 import { all, call, put, race, select, take, takeLatest } from '@redux-saga/core/effects';
 import { AppActionTypes } from '@/redux/app/action-types';
-import { tryCatchSaga } from '@/redux/sagas';
+import { tryCatchSaga, TryCatchSagaOptions } from '@/redux/sagas';
 import { onAuthStateChanged } from 'firebase/auth';
 import { appActionCreators } from '@/redux/app/action-creators';
 import { firebaseAuth } from '@/firebase/firebaseAuth';
@@ -15,9 +15,10 @@ import firebase from 'firebase/compat';
 import User = firebase.User;
 import { getUserInfo } from '@/utils/getUserInfo';
 
-const tryCatchSagaOptions = {
+const tryCatchSagaOptions: TryCatchSagaOptions<keyof AppState> = {
   withProgress: true,
   updateProgressAction: appActionCreators.setFetching,
+  withDelay: true,
 };
 
 function createUserChanel() {
@@ -81,9 +82,9 @@ function* signUp(action: ReturnType<typeof appActionCreators.signUp>) {
 
 export function* authSaga() {
   yield all([
-    takeLatest(AppActionTypes.LOGIN, tryCatchSaga(login)),
+    takeLatest(AppActionTypes.LOGIN, tryCatchSaga(login, tryCatchSagaOptions)),
     takeLatest(AppActionTypes.SIGN_UP, tryCatchSaga(signUp, tryCatchSagaOptions)),
-    takeLatest(AppActionTypes.LOGOUT, tryCatchSaga(logout)),
+    takeLatest(AppActionTypes.LOGOUT, tryCatchSaga(logout, tryCatchSagaOptions)),
     takeLatest(AppActionTypes.INIT, function* (action: ReturnType<typeof appActionCreators.initialize>) {
       yield race([
         take(AppActionTypes.CANCEL_SUBSCRIPTION),

@@ -1,4 +1,4 @@
-import { call, fork, put } from '@redux-saga/core/effects';
+import { call, delay, fork, put } from '@redux-saga/core/effects';
 import { authSaga } from '@/redux/app/sagas';
 import { AppState } from '@/redux/store';
 import { AnyAction } from 'redux';
@@ -15,12 +15,15 @@ export function* rootSaga() {
  */
 export function tryCatchSaga<A, K extends keyof AppState>(
   saga: (a: A, s?: AppState[K]) => void,
-  options?: { withProgress: boolean; withStore?: K; updateProgressAction: (payload: boolean) => AnyAction },
+  options?: TryCatchSagaOptions<K>,
 ) {
   return function* (a: A) {
     try {
       if (options?.withProgress) {
         yield put(options.updateProgressAction(true));
+      }
+      if (options?.withDelay) {
+        yield delay(500);
       }
       yield call(saga, a);
     } catch (error) {
@@ -32,4 +35,11 @@ export function tryCatchSaga<A, K extends keyof AppState>(
       }
     }
   };
+}
+
+export interface TryCatchSagaOptions<K> {
+  withProgress: boolean;
+  withStore?: K;
+  updateProgressAction: (payload: boolean) => AnyAction;
+  withDelay?: boolean;
 }
