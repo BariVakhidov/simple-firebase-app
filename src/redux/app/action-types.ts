@@ -9,4 +9,5 @@ export enum AppActionTypes {
   SET_USER = 'fire-base-app/app/SET_USER',
   UPDATE_USER = 'fire-base-app/app/UPDATE_USER',
   SET_ERROR = 'fire-base-app/app/SET_ERROR',
+  CANCEL_SUBSCRIPTION = 'fire-base-app/app/CANCEL_SUBSCRIPTION',
 }

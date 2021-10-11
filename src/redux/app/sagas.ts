@@ -1,4 +1,4 @@
-import { all, call, put, select, take, takeLatest } from '@redux-saga/core/effects';
+import { all, call, put, race, select, take, takeLatest } from '@redux-saga/core/effects';
 import { AppActionTypes } from '@/redux/app/action-types';
 import { tryCatchSaga } from '@/redux/sagas';
 import { onAuthStateChanged } from 'firebase/auth';
@@ -23,7 +23,10 @@ const tryCatchSagaOptions = {
 function createUserChanel() {
   const subscribe = emitter => {
     const unsubscribe = onAuthStateChanged(appAuth, user => user ? emitter(user) : emitter(''));
-    return () => unsubscribe();
+    return () => {
+      unsubscribe();
+      console.log('onAuthStateChanged unsubscribed');
+    };
   };
   return eventChannel(subscribe);
 }
@@ -81,7 +84,12 @@ export function* authSaga() {
     takeLatest(AppActionTypes.LOGIN, tryCatchSaga(login)),
     takeLatest(AppActionTypes.SIGN_UP, tryCatchSaga(signUp, tryCatchSagaOptions)),
     takeLatest(AppActionTypes.LOGOUT, tryCatchSaga(logout)),
-    takeLatest(AppActionTypes.INIT, tryCatchSaga(initialize)),
+    takeLatest(AppActionTypes.INIT, function* (action: ReturnType<typeof appActionCreators.initialize>) {
+      yield race([
+        take(AppActionTypes.CANCEL_SUBSCRIPTION),
+        call(tryCatchSaga(initialize), action),
+      ]);
+    }),
     takeLatest(AppActionTypes.SIGN_IN_WITH_GOOGLE, tryCatchSaga(signInWithGoogle, tryCatchSagaOptions)),
     takeLatest(AppActionTypes.UPDATE_USER, tryCatchSaga(updateUser, tryCatchSagaOptions)),
   ]);

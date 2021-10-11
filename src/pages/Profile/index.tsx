@@ -30,15 +30,16 @@ export const Profile: FC = memo(() => {
   return (
     <PageWrapper>
       <Row justify="space-between" align="top">
-        <Col span={5}><Image src={user.photoURL ? user.photoURL : avatar} width={200} preview={!!user.photoURL}/></Col>
+        <Col><Image src={user.photoURL ? user.photoURL : avatar} width={200}
+                    preview={!!user.photoURL}/></Col>
         {isEditMode ? <EditInfo updateUser={updateUser} deactivateEditMode={deactivateEditMode} user={user}/> : <>
-          <Col span={15}>
+          <Col>
             <Descriptions title="User Info" column={1} bordered>
               {Object.entries(displayedInfo).map(i => i[1] && <Descriptions.Item key={i[0]}
                                                                                  label={i[0]}>{i[1]}</Descriptions.Item>)}
             </Descriptions>
           </Col>
-          <Col span={2}>
+          <Col>
             <EditOutlined onClick={activateEditMode} className={styles.icon}/>
           </Col>
         </>}

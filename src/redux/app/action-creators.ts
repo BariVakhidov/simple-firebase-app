@@ -15,6 +15,7 @@ export const appActionCreators = {
   setUser: createAction<Nullable<AppTypes.UserInfo>>(AppActionTypes.SET_USER),
   updateUser: createAction<Nullable<AppTypes.EditableInfo>>(AppActionTypes.UPDATE_USER),
   setError: createAction<string>(AppActionTypes.SET_ERROR),
+  cancelSubscription: createAction(AppActionTypes.CANCEL_SUBSCRIPTION),
 };
 
 export type AppActions = InferActionsType<typeof appActionCreators>;

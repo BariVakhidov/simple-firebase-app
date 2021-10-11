@@ -16,17 +16,20 @@ interface Props {
 export const UserInformation: FC<Props> = memo(({ user }) => {
   const history = useHistory();
   const dispatch = useAppDispatch();
+  const logout = () => dispatch(appActionCreators.logout());
+
   if (!user) {
     return <Space>
       <Button onClick={() => history.push(Routes.LOGIN)}>Sign In</Button>
-      <Button>Sign Up</Button>
+      <Button onClick={() => history.push(Routes.REGISTRATION)}>Sign Up</Button>
     </Space>;
   }
+
   return (
     <Space>
       <Avatar src={user.photoURL} icon={!user.photoURL && <UserOutlined/>}/>
       <span className={styles.name}>{user.displayName}</span>
-      <Button onClick={() => dispatch(appActionCreators.logout())}>Logout</Button>
+      <Button onClick={logout}>Logout</Button>
     </Space>
   );
 });

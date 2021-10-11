@@ -4,7 +4,7 @@ import React from 'react';
 export enum Routes {
   PROFILE = '/profile',
   LOGIN = '/login',
-  REGISTRATION = '/REGISTRATION',
+  REGISTRATION = '/registration',
 }
 
 export const privateRoutes: Route[] = [
