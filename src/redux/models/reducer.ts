@@ -5,10 +5,7 @@ import { SketchfabClientTypes } from '@/client/SketchfabClient/sketchfabClient-t
 
 const initialState: Readonly<ModelsTypes.ModelsState> = {
   modelsSearch: null,
-  searchParams: {
-    categories: null,
-    q: '',
-  },
+  searchParams: {},
   categories: null,
   isFetching: false,
   error: null,
@@ -26,7 +23,8 @@ export const modelsReducer: Reducer<ModelsTypes.ModelsState, ModelsActions> = cr
       state.categories = action.payload;
     })
     .addCase(modelsActionCreators.resetSearchParams, (state) => {
-      state.searchParams = initialState.searchParams;
+      const q = state.searchParams.q ? state.searchParams.q : '';
+      state.searchParams = { q };
     })
     .addCase(modelsActionCreators.cleanup, (state) => {
       return initialState;

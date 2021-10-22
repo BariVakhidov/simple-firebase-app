@@ -11,12 +11,15 @@ import { SketchfabClientTypes } from '@/client/SketchfabClient/sketchfabClient-t
 import qs from 'qs';
 import { ModelsList } from '@/pages/Models/ModelsList';
 import { Routes } from '@/constants/routes';
+import { shallowObjEquality } from '@/utils/shallowObjEquality';
+import { filterNonNull } from '@/utils/filterNonNull';
 
 export const Models: FC = memo(() => {
   const dispatch = useAppDispatch();
   const [selectedModel, setSelectedModel] = useState<Nullable<SketchfabClientTypes.Model>>(null);
   const { isFetching, modelsSearch, searchParams, categories } = useAppSelector(state => state.models);
   const history = useHistory();
+  const setFilter = (filter: Partial<SketchfabClientTypes.SearchModelsParams>) => dispatch(modelsActionCreators.setSearchParams(filter));
 
   const loadMore = () => {
     if (window.innerHeight + document.documentElement.scrollTop === document.scrollingElement.scrollHeight) {
@@ -28,55 +31,42 @@ export const Models: FC = memo(() => {
     const parsed = qs.parse(history.location.search, {
       ignoreQueryPrefix: true,
     }) as Partial<SketchfabClientTypes.SearchModelsParams>;
-
-    Object.entries(searchParams).forEach(param => {
-      if (param[1] && param[1] !== parsed[param[0]]) {
-        parsed[param[0]] = param[1];
-      }
-    });
-
-    history.push({
-      pathname: Routes.MODELS,
-      search: qs.stringify(parsed),
-    });
-
-    if (searchParams.q || searchParams.categories) {//TODO: when q is '' and user switch from one category to all categories
-      dispatch(modelsActionCreators.getModels(searchParams));
+    if (!shallowObjEquality(parsed, searchParams)) {
+      setFilter(parsed);
     }
-
-  }, [searchParams]);
+  }, [history.location.search]);
 
   useEffect(() => {
+
     const parsed = qs.parse(history.location.search, {
       ignoreQueryPrefix: true,
     }) as Partial<SketchfabClientTypes.SearchModelsParams>;
 
-    const filter = { ...searchParams };
+    if (Object.values(searchParams).length) {
 
-    Object.entries(parsed).forEach(i => {
-      if (i[1]) {
-        filter[i[0]] = i[1];
+      dispatch(modelsActionCreators.getModels(searchParams));
+
+      if (!shallowObjEquality(parsed, searchParams)) {
+        history.push({
+          pathname: Routes.MODELS,
+          search: qs.stringify(filterNonNull(searchParams)),
+        });
       }
-    });
-
-    dispatch(modelsActionCreators.setSearchParams(filter));
-    dispatch(modelsActionCreators.getCategories());
-
-    return () => {
-      dispatch(modelsActionCreators.cleanup());
-    };
-  }, [dispatch]);
+    }
+  }, [dispatch, searchParams]);
 
   useEffect(() => {
+    dispatch(modelsActionCreators.getCategories());
     window.addEventListener('scroll', loadMore);
     return () => {
       window.removeEventListener('scroll', loadMore);
+      dispatch(modelsActionCreators.cleanup());
     };
   }, [dispatch]);
 
   return (
     <PageWrapper>
-      <ModelsSearchForm searchParams={searchParams} categories={categories}/>
+      <ModelsSearchForm setFilter={setFilter} searchParams={searchParams} categories={categories}/>
       <ModelsList modelsSearch={modelsSearch} setSelectedModel={setSelectedModel}/>
       {isFetching && <Preloader absolute/>}
       {selectedModel && <PopUp closeModal={() => setSelectedModel(null)} model={selectedModel}/>}
