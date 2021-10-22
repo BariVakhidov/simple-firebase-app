@@ -3,14 +3,16 @@ import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
 import createSagaMiddleware from 'redux-saga';
 import { rootSaga } from '@/redux/sagas';
 import { appReducer } from '@/redux/app/reducer';
+import { modelsReducer } from '@/redux/models/reducer';
 
 const sagaMiddleware = createSagaMiddleware();
 
 export const store = configureStore({
   reducer: {
     app: appReducer,
+    models: modelsReducer,
   },
-  devTools:  true,
+  devTools: true,
   middleware: getDefaultMiddleware => getDefaultMiddleware().concat(sagaMiddleware),
 });
 sagaMiddleware.run(rootSaga);

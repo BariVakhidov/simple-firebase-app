@@ -1,11 +1,13 @@
 import { call, delay, fork, put } from '@redux-saga/core/effects';
-import { authSaga } from '@/redux/app/sagas';
+import { appSaga } from '@/redux/app/sagas';
 import { AppState } from '@/redux/store';
 import { AnyAction } from 'redux';
 import { appActionCreators } from '@/redux/app/action-creators';
+import { modelsSaga } from '@/redux/models/sagas';
 
 export function* rootSaga() {
-  yield fork(authSaga);
+  yield fork(appSaga);
+  yield fork(modelsSaga);
 }
 
 /**

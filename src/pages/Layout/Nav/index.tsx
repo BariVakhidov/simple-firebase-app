@@ -9,7 +9,7 @@ export const AppNav: FC = memo(() => {
   const location = useLocation();
   return (
     <Menu selectedKeys={[location.pathname]} theme="dark" mode="horizontal" defaultSelectedKeys={['/']} className={styles.menu}>
-      <Menu.Item key={'/'}><Link to={'/'}>Home</Link></Menu.Item>
+      <Menu.Item key={Routes.MODELS}><Link to={Routes.MODELS}>Models</Link></Menu.Item>
       <Menu.Item key={Routes.PROFILE}><Link to={Routes.PROFILE}>Profile</Link></Menu.Item>
     </Menu>
   );

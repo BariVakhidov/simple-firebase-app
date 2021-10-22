@@ -5,6 +5,7 @@ export enum Routes {
   PROFILE = '/profile',
   LOGIN = '/login',
   REGISTRATION = '/registration',
+  MODELS = '/models',
 }
 
 export const privateRoutes: Route[] = [

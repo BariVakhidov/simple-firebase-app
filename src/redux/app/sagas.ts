@@ -80,7 +80,7 @@ function* signUp(action: ReturnType<typeof appActionCreators.signUp>) {
   yield call(firebaseAuth.createUser, action.payload);
 }
 
-export function* authSaga() {
+export function* appSaga() {
   yield all([
     takeLatest(AppActionTypes.LOGIN, tryCatchSaga(login, tryCatchSagaOptions)),
     takeLatest(AppActionTypes.SIGN_UP, tryCatchSaga(signUp, tryCatchSagaOptions)),
