@@ -10,4 +10,7 @@ export enum ModelsActionTypes {
   GET_CATEGORIES = 'fire-base-app/models/GET_CATEGORIES',
   RESET_SEARCH_PARAMS = 'fire-base-app/models/RESET_SEARCH_PARAMS',
   CLEANUP = 'fire-base-app/models/CLEANUP',
+
+  CHANGE_MODEL_CONDITION = 'fire-base-app/models/CHANGE_MODEL_CONDITION',
+  SET_FAVORITES_MODELS = 'fire-base-app/models/SET_FAVORITES_MODELS',
 }

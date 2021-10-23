@@ -6,6 +6,9 @@ import { modelsActionCreators } from '@/redux/models/action-creators';
 import { sketchfabClient } from '@/client/SketchfabClient';
 import { SketchfabClientTypes } from '@/client/SketchfabClient/sketchfabClient-types';
 import { ModelsActionTypes } from '@/redux/models/action-types';
+import { firebaseModels } from '@/firebase/firebaseModels';
+import { ModelsTypes } from '@/redux/models/types';
+import FavoriteModel = ModelsTypes.FavoriteModel;
 
 const tryCatchSagaOptions: TryCatchSagaOptions<keyof AppState> = {
   withProgress: true,
@@ -22,6 +25,15 @@ function* getModels(action: ReturnType<typeof modelsActionCreators.getModels>) {
   const response: SketchfabClientTypes.SearchModelsResponse = yield call(sketchfabClient.getModels, action.payload);
   response.results.forEach(i => i.thumbnails.images.sort((a, b) => b.width - a.width));
   yield put(modelsActionCreators.setModels(response));
+}
+
+function* changeModelCondition(action: ReturnType<typeof modelsActionCreators.changeModelCondition>) {
+  const data: FavoriteModel[] = yield select((state: AppState) => state.models.userFavoritesModels);
+  if (!data.find(model => model.uid === action.payload.model.uid)) {
+    yield call(firebaseModels.setModel, action.payload);
+  } else {
+    yield call(firebaseModels.removeModel, action.payload);
+  }
 }
 
 function* loadMore() {
@@ -43,6 +55,7 @@ export function* modelsSaga() {
     takeLatest(ModelsActionTypes.GET_MODELS, tryCatchSaga(getModels, tryCatchSagaOptions)),
     takeLatest(ModelsActionTypes.GET_MORE_MODELS, tryCatchSaga(loadMore)),
     takeLatest(ModelsActionTypes.GET_CATEGORIES, tryCatchSaga(getCategories, tryCatchSagaOptions)),
+    takeLatest(ModelsActionTypes.CHANGE_MODEL_CONDITION, tryCatchSaga(changeModelCondition, tryCatchSagaOptions)),
   ]);
 }
 

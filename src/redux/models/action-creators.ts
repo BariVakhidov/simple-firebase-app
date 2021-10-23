@@ -4,6 +4,8 @@ import { InferActionsType } from '@/redux/store';
 import { ModelsActionTypes } from '@/redux/models/action-types';
 import { SketchfabClientTypes } from '@/client/SketchfabClient/sketchfabClient-types';
 import { Nullable } from '@/baseTypes';
+import { ModelsTypes } from '@/redux/models/types';
+import { SetFirebaseModelRequest } from '@/firebase/types';
 
 export const modelsActionCreators = {
   setModels: createAction<SketchfabClientTypes.SearchModelsResponse>(ModelsActionTypes.SET_MODELS),
@@ -16,6 +18,8 @@ export const modelsActionCreators = {
   setSearchParams: createAction<Nullable<Partial<SketchfabClientTypes.SearchModelsParams>>>(ModelsActionTypes.SET_SEARCH_PARAMS),
   resetSearchParams: createAction(ModelsActionTypes.RESET_SEARCH_PARAMS),
   getCategories: createAction(ModelsActionTypes.GET_CATEGORIES),
+  changeModelCondition: createAction<SetFirebaseModelRequest>(ModelsActionTypes.CHANGE_MODEL_CONDITION),
+  setFavoritesModels: createAction<ModelsTypes.FavoriteModel[]>(ModelsActionTypes.SET_FAVORITES_MODELS),
   cleanup: createAction(ModelsActionTypes.CLEANUP),
 };
 

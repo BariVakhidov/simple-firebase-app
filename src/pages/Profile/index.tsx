@@ -9,6 +9,7 @@ import { AppTypes } from '@/redux/app/types';
 import { appActionCreators } from '@/redux/app/action-creators';
 import { EditOutlined } from '@ant-design/icons';
 import { Preloader } from '@Components/preloader';
+import { FavoritesModels } from '@/pages/Profile/FavoritesModels';
 
 export const Profile: FC = memo(() => {
   const [isEditMode, setEditMode] = useState(false);
@@ -30,8 +31,10 @@ export const Profile: FC = memo(() => {
   return (
     <PageWrapper>
       <Row justify="space-between" align="top">
-        <Col><Image src={user.photoURL ? user.photoURL : avatar} width={200}
-                    preview={!!user.photoURL}/></Col>
+        <Col>
+          <Image src={user.photoURL ? user.photoURL : avatar} width={200}
+                 preview={!!user.photoURL}/>
+        </Col>
         {isEditMode ? <EditInfo updateUser={updateUser} deactivateEditMode={deactivateEditMode} user={user}/> : <>
           <Col>
             <Descriptions title="User Info" column={1} bordered>
@@ -44,6 +47,7 @@ export const Profile: FC = memo(() => {
           </Col>
         </>}
       </Row>
+      <FavoritesModels/>
       {isFetching && <Preloader absolute/>}
     </PageWrapper>
   );

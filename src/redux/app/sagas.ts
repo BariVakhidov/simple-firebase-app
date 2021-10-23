@@ -1,19 +1,22 @@
-import { all, call, put, race, select, take, takeLatest } from '@redux-saga/core/effects';
+import { all, call, put, race, select, take, takeLatest, fork } from '@redux-saga/core/effects';
 import { AppActionTypes } from '@/redux/app/action-types';
 import { tryCatchSaga, TryCatchSagaOptions } from '@/redux/sagas';
 import { onAuthStateChanged } from 'firebase/auth';
 import { appActionCreators } from '@/redux/app/action-creators';
 import { firebaseAuth } from '@/firebase/firebaseAuth';
 import { EventChannel, eventChannel } from 'redux-saga';
-
+import { doc, onSnapshot } from 'firebase/firestore';
 import { Nullable } from '@/baseTypes';
-import { appAuth } from '@/firebase';
+import { appAuth, db } from '@/firebase';
 import { AppState } from '@/redux/store';
 import { AppTypes } from '@/redux/app/types';
 import { firebaseUser } from '@/firebase/firebaseUser';
 import firebase from 'firebase/compat';
 import User = firebase.User;
 import { getUserInfo } from '@/utils/getUserInfo';
+import { modelsActionCreators } from '@/redux/models/action-creators';
+import { ModelsTypes } from '@/redux/models/types';
+import { firebaseModels } from '@/firebase/firebaseModels';
 
 const tryCatchSagaOptions: TryCatchSagaOptions<keyof AppState> = {
   withProgress: true,
@@ -32,7 +35,32 @@ function createUserChanel() {
   return eventChannel(subscribe);
 }
 
-export function* initialize(action: ReturnType<typeof appActionCreators.initialize>) {
+function createModelsChanel(userId: string) {
+  const subscribe = emitter => {
+    const unsubscribe = onSnapshot(doc(db, 'users', userId), (document) => {
+      emitter(document.data().favoritesModels);
+    });
+    return () => {
+      unsubscribe();
+      console.log('onSnapshot unsubscribed');
+    };
+  };
+  return eventChannel(subscribe);
+}
+
+function* modelsStateWatcher(userId: string) {
+  const modelsChannel: EventChannel<ModelsTypes.FavoriteModel> = yield call(createModelsChanel, userId);
+  try {
+    while (true) {
+      const response: ModelsTypes.FavoriteModel[] = yield take(modelsChannel);
+      yield put(modelsActionCreators.setFavoritesModels(response));
+    }
+  } finally {
+    modelsChannel.close();
+  }
+}
+
+function* userStateWatcher() {
   const userChanel: EventChannel<User> = yield call(createUserChanel);
   try {
     let initialized = false;
@@ -51,6 +79,17 @@ export function* initialize(action: ReturnType<typeof appActionCreators.initiali
   } finally {
     userChanel.close();
   }
+}
+
+export function* initialize(action: ReturnType<typeof appActionCreators.initialize>) {
+  yield fork(userStateWatcher);
+  yield take(AppActionTypes.SET_INIT);
+  const userId: string = yield select((state: AppState) => state.app.user.uid);
+  const models = yield call(firebaseModels.getModels, userId);
+  if (!models) {
+    yield call(firebaseModels.createUserEntity, userId);
+  }
+  yield fork(modelsStateWatcher, userId);
 }
 
 function* updateUser(action: ReturnType<typeof appActionCreators.updateUser>) {

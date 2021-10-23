@@ -1,4 +1,4 @@
-import React, { FC, memo, useEffect, useState } from 'react';
+import React, { FC, memo, useCallback, useEffect, useState } from 'react';
 import { PageWrapper } from '@Components/pageWrapper';
 import { useAppDispatch, useAppSelector } from '@/redux/store';
 import { modelsActionCreators } from '@/redux/models/action-creators';
@@ -19,7 +19,7 @@ export const Models: FC = memo(() => {
   const [selectedModel, setSelectedModel] = useState<Nullable<SketchfabClientTypes.Model>>(null);
   const { isFetching, modelsSearch, searchParams, categories } = useAppSelector(state => state.models);
   const history = useHistory();
-  const setFilter = (filter: Partial<SketchfabClientTypes.SearchModelsParams>) => dispatch(modelsActionCreators.setSearchParams(filter));
+  const setFilter = useCallback((filter: Partial<SketchfabClientTypes.SearchModelsParams>) => dispatch(modelsActionCreators.setSearchParams(filter)), [dispatch]);
 
   const loadMore = () => {
     if (window.innerHeight + document.documentElement.scrollTop === document.scrollingElement.scrollHeight) {

@@ -7,6 +7,7 @@ const initialState: Readonly<ModelsTypes.ModelsState> = {
   modelsSearch: null,
   searchParams: {},
   categories: null,
+  userFavoritesModels: [],
   isFetching: false,
   error: null,
 };
@@ -19,6 +20,9 @@ export const modelsReducer: Reducer<ModelsTypes.ModelsState, ModelsActions> = cr
     .addCase(modelsActionCreators.setSearchParams, (state, action) => {
       state.searchParams = action.payload;
     })
+    .addCase(modelsActionCreators.setFavoritesModels, (state, action) => {
+      state.userFavoritesModels = action.payload;
+    })
     .addCase(modelsActionCreators.setCategories, (state, action) => {
       state.categories = action.payload;
     })
@@ -27,7 +31,9 @@ export const modelsReducer: Reducer<ModelsTypes.ModelsState, ModelsActions> = cr
       state.searchParams = { q };
     })
     .addCase(modelsActionCreators.cleanup, (state) => {
-      return initialState;
+      state.modelsSearch = null;
+      state.searchParams = {};
+      state.categories = null;
     })
     .addCase(modelsActionCreators.setModels, (state, action) => {
       state.modelsSearch = action.payload;
