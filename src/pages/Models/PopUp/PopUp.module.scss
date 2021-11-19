@@ -1,3 +1,17 @@
+.modal, .content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.content {
+  padding-top: 20px;
+  span {
+    padding-bottom: 1rem;
+  }
+}
+
 .modelInfo {
   display: flex;
   flex-direction: column;

@@ -1,6 +1,7 @@
 export enum AppActionTypes {
   LOGIN = 'fire-base-app/app/LOGIN',
   INIT = 'fire-base-app/app/INIT',
+  INIT_USER_MODELS = 'fire-base-app/app/INIT_USER_MODELS',
   SET_INIT = 'fire-base-app/app/SET_INIT',
   SIGN_IN_WITH_GOOGLE = 'fire-base-app/app/SIGN_IN_WITH_GOOGLE',
   LOGOUT = 'fire-base-app/app/LOGOUT',

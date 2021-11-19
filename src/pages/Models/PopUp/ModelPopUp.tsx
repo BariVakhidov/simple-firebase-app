@@ -8,7 +8,7 @@ interface Props {
   closeModal: () => void;
 }
 
-export const PopUp: FC<Props> = memo(({ model, closeModal }) => {
+export const ModelPopUp: FC<Props> = memo(({ model, closeModal }) => {
   const viewerIframeRef = useRef(null);
 
 

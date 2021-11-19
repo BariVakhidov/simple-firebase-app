@@ -33,7 +33,6 @@ const Registration: FC = memo(() => {
             </Button>
           </Space>
         </Form.Item>
-
       </Form>
     </FormWrapper>
   );

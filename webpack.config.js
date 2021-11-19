@@ -13,7 +13,7 @@ const Dotenv = require('dotenv-webpack');
 
 module.exports = {
     mode: NODE_ENV || PRODUCTION,
-    entry: './src/index.tsx',
+    entry: './src/ModelPopUp.tsx',
     devServer: {
         historyApiFallback: true,
         hot: true,

@@ -5,7 +5,7 @@ import { modelsActionCreators } from '@/redux/models/action-creators';
 import { Preloader } from '@Components/preloader';
 import { ModelsSearchForm } from '@/pages/Models/ModelsSearchForm';
 import { Nullable } from '@/baseTypes';
-import { PopUp } from '@/pages/Models/PopUp';
+import { ModelPopUp } from '@/pages/Models/PopUp/ModelPopUp';
 import { useHistory } from 'react-router';
 import { SketchfabClientTypes } from '@/client/SketchfabClient/sketchfabClient-types';
 import qs from 'qs';
@@ -69,7 +69,7 @@ export const Models: FC = memo(() => {
       <ModelsSearchForm setFilter={setFilter} searchParams={searchParams} categories={categories}/>
       <ModelsList modelsSearch={modelsSearch} setSelectedModel={setSelectedModel}/>
       {isFetching && <Preloader absolute/>}
-      {selectedModel && <PopUp closeModal={() => setSelectedModel(null)} model={selectedModel}/>}
+      {selectedModel && <ModelPopUp closeModal={() => setSelectedModel(null)} model={selectedModel}/>}
     </PageWrapper>
   );
 });

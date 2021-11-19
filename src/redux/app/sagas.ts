@@ -56,16 +56,17 @@ function* modelsStateWatcher(userId: string) {
       yield put(modelsActionCreators.setFavoritesModels(response));
     }
   } finally {
+    console.log('MODELS CHANNEL CLOSED');
     modelsChannel.close();
   }
 }
 
 function* userStateWatcher() {
-  const userChanel: EventChannel<User> = yield call(createUserChanel);
+  const userChannel: EventChannel<User> = yield call(createUserChanel);
   try {
     let initialized = false;
     while (true) {
-      const user: User | '' = yield take(userChanel);
+      const user: User | '' = yield take(userChannel);
       let userInfo: Nullable<AppTypes.UserInfo> = null;
       if (user) {
         userInfo = getUserInfo(user);
@@ -77,19 +78,22 @@ function* userStateWatcher() {
       }
     }
   } finally {
-    userChanel.close();
+    console.log('USER CHANNEL CLOSED');
+    userChannel.close();
   }
 }
 
-export function* initialize(action: ReturnType<typeof appActionCreators.initialize>) {
-  yield fork(userStateWatcher);
-  yield take(AppActionTypes.SET_INIT);
-  const userId: string = yield select((state: AppState) => state.app.user.uid);
+function* initializeUserModels(action: ReturnType<typeof appActionCreators.initializeUserModels>) {
+  const userId = action.payload;
   const models = yield call(firebaseModels.getModels, userId);
   if (!models) {
     yield call(firebaseModels.createUserEntity, userId);
   }
   yield fork(modelsStateWatcher, userId);
+}
+
+export function* initialize(action: ReturnType<typeof appActionCreators.initialize>) {
+  yield fork(userStateWatcher);
 }
 
 function* updateUser(action: ReturnType<typeof appActionCreators.updateUser>) {
@@ -128,6 +132,12 @@ export function* appSaga() {
       yield race([
         take(AppActionTypes.CANCEL_SUBSCRIPTION),
         call(tryCatchSaga(initialize), action),
+      ]);
+    }),
+    takeLatest(AppActionTypes.INIT_USER_MODELS, function* (action: ReturnType<typeof appActionCreators.initializeUserModels>) {
+      yield race([
+        take(AppActionTypes.LOGOUT),
+        call(tryCatchSaga(initializeUserModels), action),
       ]);
     }),
     takeLatest(AppActionTypes.SIGN_IN_WITH_GOOGLE, tryCatchSaga(signInWithGoogle, tryCatchSagaOptions)),

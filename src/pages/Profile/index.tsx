@@ -47,7 +47,7 @@ export const Profile: FC = memo(() => {
           </Col>
         </>}
       </Row>
-      <FavoritesModels/>
+      <FavoritesModels userId={user.uid}/>
       {isFetching && <Preloader absolute/>}
     </PageWrapper>
   );
