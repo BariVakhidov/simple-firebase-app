@@ -6,7 +6,7 @@ import { Spin } from 'antd';
 import { modelsActionCreators } from '@/redux/models/action-creators';
 
 export const AppWrapper: FC = memo(() => {
-  //TEST
+  //TEST4
   const { initialized, user } = useAppSelector(state => state.app);
   const dispatch = useAppDispatch();
 
