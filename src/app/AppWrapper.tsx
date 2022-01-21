@@ -6,7 +6,6 @@ import { Spin } from 'antd';
 import { modelsActionCreators } from '@/redux/models/action-creators';
 
 export const AppWrapper: FC = memo(() => {
-  //test git workflow
   const { initialized, user } = useAppSelector(state => state.app);
   const dispatch = useAppDispatch();
 
