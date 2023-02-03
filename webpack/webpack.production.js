@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
-const { getCopyWebpackPlugin } = require("./plugins/copy-plugin");
 const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
 
 module.exports = () => ({
@@ -18,5 +17,4 @@ module.exports = () => ({
 			},
 		},
 	},
-	plugins: [getCopyWebpackPlugin()],
 });
