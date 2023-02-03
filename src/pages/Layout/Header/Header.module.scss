@@ -1,26 +1,33 @@
 .header {
-  width: 100%;
+
   display: flex;
+  width: 100%;
 
   .logo {
-    float: left;
+
     display: flex;
-    align-items: center;
     height: 31px;
+    align-items: center;
     margin: 16px 24px 16px 0;
+    float: left;
 
     img {
+
       width: 30px;
     }
   }
+
   .buttons {
-    float: right;
+
     display: flex;
-    align-items: center;
     height: 31px;
+    align-items: center;
     margin: 16px 24px 16px 0;
+    float: right;
   }
+
   .name {
+
     color: antiquewhite;
   }
 }

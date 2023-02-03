@@ -1,41 +1,45 @@
-import React, { FC, memo } from 'react';
-import { useAppDispatch } from '@/redux/store';
-import { appActionCreators } from '@/redux/app/action-creators';
-import { Button, Form, Space } from 'antd';
-import { FormWrapper } from '@Components/formWrapper';
-import { withAuthRedirect } from '@/hoc/withAuthRedirect';
-import { AppTypes } from '@/redux/app/types';
+import React, { FC, memo } from "react";
+import { Button, Form, Space } from "antd";
+
 import {
-  registrationFormConfig,
-  registrationItemLayout,
-  tailRegistrationItemLayout,
-} from '@/constants/registrationFormConfig';
-import { FormInputItem } from '@Components/formItem/FormInputItem';
+	registrationFormConfig,
+	registrationItemLayout,
+	tailRegistrationItemLayout,
+} from "@/constants/registrationFormConfig";
+import { withAuthRedirect } from "@/hoc/withAuthRedirect";
+import { appActionCreators } from "@/redux/app/action-creators";
+import { AppTypes } from "@/redux/app/types";
+import { useAppDispatch } from "@/redux/store";
+import { FormInputItem } from "@Components/formItem/FormInputItem";
+import { FormWrapper } from "@Components/formWrapper";
 
 const Registration: FC = memo(() => {
-  const dispatch = useAppDispatch();
+	const dispatch = useAppDispatch();
 
-  const signUp = (values: AppTypes.UserAuthParams) => dispatch(appActionCreators.signUp(values));
+	const signUp = (values: AppTypes.UserAuthParams) => dispatch(appActionCreators.signUp(values));
 
-  return (
-    <FormWrapper>
-      <Form
-        {...registrationItemLayout}
-        scrollToFirstError
-        name="normal_login"
-        className="login-form"
-        onFinish={signUp}>
-        {registrationFormConfig.map(config => <FormInputItem key={config.name} formItemProps={config}/>)}
-        <Form.Item {...tailRegistrationItemLayout}>
-          <Space>
-            <Button type="primary" htmlType="submit">
-              Sign Up
-            </Button>
-          </Space>
-        </Form.Item>
-      </Form>
-    </FormWrapper>
-  );
+	return (
+		<FormWrapper>
+			<Form
+				{...registrationItemLayout}
+				scrollToFirstError
+				className="login-form"
+				name="normal_login"
+				onFinish={signUp}
+			>
+				{registrationFormConfig.map((config) => (
+					<FormInputItem formItemProps={config} key={config.name} />
+				))}
+				<Form.Item {...tailRegistrationItemLayout}>
+					<Space>
+						<Button htmlType="submit" type="primary">
+							Sign Up
+						</Button>
+					</Space>
+				</Form.Item>
+			</Form>
+		</FormWrapper>
+	);
 });
 
 export default withAuthRedirect(Registration);

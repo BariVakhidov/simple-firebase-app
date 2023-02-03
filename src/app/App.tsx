@@ -1,23 +1,31 @@
-import React, { FC, memo } from 'react';
-import { AppLayout } from '@/pages/Layout';
-import { Route, Switch } from 'react-router';
-import { privateRoutes, Routes } from '@/constants/routes';
-import { NotFound } from '@/pages/NotFound';
-import { Models } from '@/pages/Models';
-import { ProtectedRoute } from '@Components/protectedRoute';
-import Login from '@/pages/Login';
-import Registration from '@/pages/Registration';
+import React, { FC, memo } from "react";
+import { Route, Routes } from "react-router-dom";
 
+import { Paths, privateRoutes } from "@/constants/paths";
+import { AppLayout } from "@/pages/Layout";
+import Login from "@/pages/Login";
+import { Models } from "@/pages/Models";
+import { NotFound } from "@/pages/NotFound";
+import Registration from "@/pages/Registration";
+import { useAppSelector } from "@/redux/store";
+import { ProtectedComponent } from "@Components/protectedRoute";
 
 export const App: FC = memo(() => {
-  return <AppLayout>
-    <Switch>
-      {privateRoutes.map(route => <ProtectedRoute key={route.path} Component={route.Component} exact={route.exact}
-                                                  path={route.path}/>)}
-      <Route path={Routes.LOGIN} exact component={Login}/>
-      <Route path={Routes.REGISTRATION} exact component={Registration}/>
-      <Route path={Routes.MODELS} exact component={Models}/>
-      <Route path={'*'} component={NotFound}/>
-    </Switch>
-  </AppLayout>;
+	const isAuth = useAppSelector((state) => state.app.isAuth);
+
+	return (
+		<AppLayout>
+			<Routes>
+				<Route element={<ProtectedComponent isAuth={isAuth} />}>
+					{privateRoutes.map((route) => (
+						<Route element={route.element} key={route.path} path={route.path} />
+					))}
+				</Route>
+				<Route element={<Login />} path={Paths.LOGIN} />
+				<Route element={<Registration />} path={Paths.REGISTRATION} />
+				<Route element={<Models />} path={Paths.MODELS} />
+				<Route element={<NotFound />} path="*" />
+			</Routes>
+		</AppLayout>
+	);
 });

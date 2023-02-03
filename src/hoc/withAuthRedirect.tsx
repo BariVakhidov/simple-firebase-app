@@ -1,18 +1,22 @@
-import React from 'react';
-import { useAppSelector } from '@/redux/store';
-import { Redirect } from 'react-router';
-import { Routes } from '@/constants/routes';
-import { Preloader } from '@Components/preloader';
+import React from "react";
+import { Navigate } from "react-router-dom";
 
-export function withAuthRedirect<T>(Component: React.ComponentType<T>): React.ComponentType<T> {
-  return (props) => {
-    const { user, isFetching } = useAppSelector(state => state.app);
-    if (user) {
-      return <Redirect to={Routes.PROFILE}/>;
-    }
-    return <>
-      <Component {...props}/>
-      {isFetching && <Preloader absolute/>}
-    </>;
-  };
+import { Paths } from "@/constants/paths";
+import { useAppSelector } from "@/redux/store";
+import { Preloader } from "@Components/preloader";
+
+export function withAuthRedirect(Component: React.ComponentType): React.ComponentType {
+	return () => {
+		const { user, isFetching } = useAppSelector((state) => state.app);
+		if (user) {
+			return <Navigate to={Paths.PROFILE} />;
+		}
+		return (
+			<>
+				<Component />
+
+				{isFetching && <Preloader absolute />}
+			</>
+		);
+	};
 }

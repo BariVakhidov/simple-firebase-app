@@ -1,22 +1,30 @@
-.modal, .content {
+.modal,
+.content {
+
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
 }
 
 .content {
+
   padding-top: 20px;
+
   span {
+
     padding-bottom: 1rem;
   }
 }
 
 .modelInfo {
+
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
+
   .description {
+
     padding: 0.5rem;
   }
 }

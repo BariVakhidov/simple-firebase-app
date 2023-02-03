@@ -1,24 +1,25 @@
-import React, { FC, memo } from 'react';
-import styles from './Header.module.scss';
-import { Layout } from 'antd';
-import { AppNav } from '@/pages/Layout/Nav';
-import logo from '@Assets/images/logo.png';
-import { useAppSelector } from '@/redux/store';
-import { UserInformation } from '@/pages/Layout/Header/UserInformation';
+import React, { FC, memo } from "react";
+import { Layout } from "antd";
+
+import { UserInformation } from "@/pages/Layout/Header/UserInformation";
+import { AppNav } from "@/pages/Layout/Nav";
+import { useAppSelector } from "@/redux/store";
+import logo from "@Assets/images/logo.png";
+
+import styles from "./Header.module.scss";
 
 const { Header } = Layout;
 
 export const AppHeader: FC = memo(() => {
+	const { user } = useAppSelector((state) => state.app);
 
-  const { user } = useAppSelector(state => state.app);
-
-  return (
-    <Header className={styles.header}>
-      <div className={styles.logo}>
-        <img src={logo} alt=""/>
-      </div>
-      <AppNav/>
-      <UserInformation user={user}/>
-    </Header>
-  );
+	return (
+		<Header className={styles.header}>
+			<div className={styles.logo}>
+				<img alt="" src={logo} />
+			</div>
+			<AppNav />
+			<UserInformation user={user} />
+		</Header>
+	);
 });

@@ -1,19 +1,35 @@
 {
   "compilerOptions": {
     "jsx": "react",
-    "module": "CommonJS",
-    "target": "es6",
+    "module": "esnext",
+    "target": "ES6",
+    "lib": [
+      "DOM",
+      "DOM.Iterable",
+      "ESNext"
+    ],
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "allowJs": true,
+    "skipLibCheck": true,
+    "allowSyntheticDefaultImports": true,
+    "noFallthroughCasesInSwitch": true,
+    "moduleResolution": "node",
+    "isolatedModules": true,
+    "esModuleInterop": true,
+    "resolveJsonModule": true,
     "baseUrl": "./src",
+    "types": ["react/next", "react-dom/next", "node"],
     "paths": {
       "@Components/*": ["./components/*"],
-      "@Utilities/*": ["./utilities/*"],
-      "@API/*": ["./api/*"],
-      "@Assets/*": ["./assets/*"],
-      "@/*": ["./*"],
+      "@Pages/*": ["./pages/*"],
+      "@Utils/*": ["./utils/*"],
+      "@Client/*": ["./client/*"],
+      "@Assets/*": ["../assets/*"],
+      "@/*": ["./*"]
     },
-    "esModuleInterop": true,
-    "plugins": [{ "name": "typescript-plugin-css-modules" }],
+    "plugins": [{ "name": "typescript-plugin-css-modules" }]
   },
-  "include": ["./**/*.ts", "./**/*.tsx", "./**/*.js", "./**/*.jsx"],
-  "exclude": ["node_modules", "build", "**/*.spec.ts", "**/*.d.ts"]
+  "include": ["./**/*.ts", "./**/*.tsx", "./**/*.js", "./**/*.jsx", "@types/**/*.d.ts", ".eslintrc.js"],
+  "exclude": ["node_modules", "dist", "**/*.spec.ts", ".husky", "assets"]
 }

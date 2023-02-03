@@ -1,8 +1,7 @@
 const getCssLoader = () => {
 	return {
-		loader: "css-loader",
+		loader: require.resolve("css-loader"),
 		options: {
-			sourceMap: true,
 			esModule: true,
 			importLoaders: 1,
 			modules: true,

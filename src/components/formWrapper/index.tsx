@@ -1,11 +1,10 @@
-import React, { FC, memo } from 'react';
-import { PageWrapper } from '@Components/pageWrapper';
-import styles from './FormWrapper.module.scss';
+import React, { FC, memo } from "react";
 
-export const FormWrapper: FC = memo(({ children }) => {
-  return (
-    <PageWrapper style={styles.container}>
-      {children}
-    </PageWrapper>
-  );
+import { WithChildren } from "@/baseTypes";
+import { PageWrapper } from "@Components/pageWrapper";
+
+import styles from "./FormWrapper.module.scss";
+
+export const FormWrapper: FC<WithChildren> = memo(({ children }) => {
+	return <PageWrapper style={styles.container}>{children}</PageWrapper>;
 });

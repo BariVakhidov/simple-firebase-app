@@ -1,47 +1,53 @@
-import React, { FC, memo } from 'react';
-import styles from './Profile.module.scss';
-import { CloseOutlined } from '@ant-design/icons';
-import { AppTypes } from '@/redux/app/types';
-import { Button, Col, Form, Input, Space } from 'antd';
-import { capitalizeFirstLetter } from '@/utils/capitalizeFirstLetter';
+import React, { FC, memo } from "react";
+import { Button, Col, Form, Input, Space } from "antd";
+import { CloseOutlined } from "@ant-design/icons";
+
+import { AppTypes } from "@/redux/app/types";
+import { capitalizeFirstLetter } from "@Utils/capitalizeFirstLetter";
+
+import styles from "./Profile.module.scss";
 
 interface Props {
-  user: AppTypes.UserInfo;
-  deactivateEditMode: () => void;
-  updateUser: (values: AppTypes.EditableInfo) => void;
+	user: AppTypes.UserInfo;
+	deactivateEditMode: () => void;
+	updateUser: (values: AppTypes.EditableInfo) => void;
 }
 
+const getEditInfo = (user: AppTypes.UserInfo) => {
+	const { email, photoURL, displayName } = user;
+	return { email, photoURL, displayName };
+};
+
 export const EditInfo: FC<Props> = memo(({ user, deactivateEditMode, updateUser }) => {
-  const { uid, emailVerified, phoneNumber, ...editableInfo } = user;
-  return (
-    <>
-      <Col span={15}>
-        <Form
-          labelCol={{ span: 5 }}
-          wrapperCol={{ span: 15 }}
-          name="edit_user_info"
-          onFinish={updateUser}
-          initialValues={editableInfo}
-        >
-          {Object.keys(editableInfo).map(i => <Form.Item
-            key={i}
-            name={i}
-            label={capitalizeFirstLetter(i)}
-          >
-            <Input/>
-          </Form.Item>)}
-          <Form.Item wrapperCol={{ offset: 5, span: 15 }}>
-            <Space>
-              <Button type="primary" htmlType="submit">
-                Save
-              </Button>
-            </Space>
-          </Form.Item>
-        </Form>
-      </Col>
-      <Col span={2}>
-        <CloseOutlined onClick={deactivateEditMode} className={styles.icon}/>
-      </Col>
-    </>
-  );
+	const editableInfo = getEditInfo(user);
+
+	return (
+		<>
+			<Col span={15}>
+				<Form
+					initialValues={editableInfo}
+					labelCol={{ span: 5 }}
+					name="edit_user_info"
+					wrapperCol={{ span: 15 }}
+					onFinish={updateUser}
+				>
+					{Object.keys(editableInfo).map((i) => (
+						<Form.Item key={i} label={capitalizeFirstLetter(i)} name={i}>
+							<Input />
+						</Form.Item>
+					))}
+					<Form.Item wrapperCol={{ offset: 5, span: 15 }}>
+						<Space>
+							<Button htmlType="submit" type="primary">
+								Save
+							</Button>
+						</Space>
+					</Form.Item>
+				</Form>
+			</Col>
+			<Col span={2}>
+				<CloseOutlined className={styles.icon} onClick={deactivateEditMode} />
+			</Col>
+		</>
+	);
 });

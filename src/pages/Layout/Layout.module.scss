@@ -1,14 +1,17 @@
 .layout {
+
   min-height: 100%;
   align-self: stretch;
 
   .content {
+
+    min-height: 380px;
     padding: 0 50px;
     margin-top: 64px;
-    min-height: 380px;
   }
 
   .footer {
+
     text-align: center;
   }
 }

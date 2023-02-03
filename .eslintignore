@@ -1,10 +1,9 @@
 .git
 .vscode
+.idea
 node_modules/**
-.eslintrc.js
-webpack.config.js
-build/**
+dist/**
+node/**
+target/**
 public/**
 assets/**
-
-webpack/**

@@ -1,3 +1,31 @@
-dist
-node_modules
-.idea
+# IDEs and editors
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+/.idea
+
+
+# compiled output
+/dist
+/node_modules
+/node
+/target
+
+#packages files
+/yarn-error.log
+
+#yarn files
+.pnp.*
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/sdks
+!.yarn/versions
+.vscode/settings.json
+
+#local development with yalc
+/.yalc
+yalc.lock

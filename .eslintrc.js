@@ -1,49 +1,99 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
 // Modules
-const path = require('path')
+const path = require("path");
 // Utils
-const { APP_DIR } = require('./webpack/utils/constants')
+const { APP_DIR } = require("./webpack/utils/constants");
 
 module.exports = {
-	parser: '@typescript-eslint/parser',
+	env: {
+		browser: true,
+		node: true,
+		es2021: true,
+	},
+	globals: {
+		localStorage: true,
+	},
+	extends: [
+		"eslint:recommended",
+		"plugin:react/recommended",
+		"plugin:@typescript-eslint/recommended",
+		"plugin:import/typescript",
+		"plugin:react-hooks/recommended",
+		"prettier",
+	],
+	parser: "@typescript-eslint/parser",
 	parserOptions: {
-		tsconfigRootDir: path.resolve(APP_DIR, 'src'),
-		project: path.resolve(APP_DIR, './tsconfig.json'),
-		sourceType: 'module',
+		tsconfigRootDir: path.resolve(APP_DIR, "src"),
+		project: path.resolve(APP_DIR, "./tsconfig.json"),
+		sourceType: "module",
 		allowImportExportEverywhere: false,
 		codeFrame: false,
 		ecmaFeatures: {
 			jsx: true,
-			experimentalObjectRestSpread: true
-		}
+			experimentalObjectRestSpread: true,
+		},
+		ecmaVersion: "latest",
 	},
-	extends: [
-		'plugin:@typescript-eslint/recommended',
-		'plugin:react/recommended',
-		'plugin:react-hooks/recommended',
-		'airbnb-typescript',
-		'plugin:import/typescript'
-	],
-	plugins: ['import', 'react', 'promise', 'prettier'],
+	plugins: ["@typescript-eslint", "react", "prettier", "import", "promise", "simple-import-sort"],
 	rules: {
 		"@typescript-eslint/no-namespace": "off",
-		"import/extensions": 'off',
-		'react/display-name': 0,
-		'linebreak-style': 0,
-		'import/prefer-default-export': 'off',
-		'import/no-extraneous-dependencies': 'off',
-		'no-param-reassign': 'off',
-		'no-shadow': 'off',
-		'react/prop-types': 'off',
-		'react-hooks/exhaustive-deps': 'off'
+		"react/jsx-filename-extension": [1, { extensions: [".js", ".jsx", ".ts", ".tsx"] }],
+		"react/jsx-sort-props": [
+			"error",
+			{
+				callbacksLast: true,
+				shorthandFirst: true,
+				multiline: "last",
+				ignoreCase: false,
+			},
+		],
+		"no-use-before-define": ["error", { functions: false }],
+		"prettier/prettier": ["error"],
+		"react/require-default-props": "off",
+		"react/prop-types": "off",
+		"react/no-array-index-key": "off",
+		"react/display-name": "off",
+		indent: ["error", "tab", { SwitchCase: 1 }],
+		"linebreak-style": 0,
+		quotes: ["error", "double"],
+		semi: ["error", "always"],
+		"simple-import-sort/imports": "error",
+		"simple-import-sort/exports": "error",
+		eqeqeq: ["error", "always"],
+		"import/no-cycle": ["error"],
 	},
-	env: {
-		es2020: true,
-		browser: true,
-		node: true
+	settings: {
+		react: {
+			version: "detect",
+		},
 	},
-	globals: {
-		document: true,
-		window: true,
-		parent: true
-	}
-}
+	overrides: [
+		// override "simple-import-sort" config
+		{
+			files: ["*.js", "*.jsx", "*.ts", "*.tsx"],
+			rules: {
+				"simple-import-sort/imports": [
+					"error",
+					{
+						groups: [
+							// `react` first, then packages starting with a character and @
+							["^react$", "^[a-z]", "^@[a-z]"],
+							// Aliases starting with `@`
+							["^@"],
+							// Packages starting with `~`
+							["^~"],
+							// Imports starting with `../`
+							["^\\.\\.(?!/?$)", "^\\.\\./?$"],
+							// Imports starting with `./`
+							["^\\./(?=.*/)(?!/?$)", "^\\.(?!/?$)", "^\\./?$"],
+							// Style imports
+							["^.+\\.s?css$"],
+							// Side effect imports
+							["^\\u0000"],
+						],
+					},
+				],
+			},
+		},
+	],
+};

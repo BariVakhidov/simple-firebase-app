@@ -3,14 +3,13 @@ const APP_DIR = process.cwd();
 const ASSETS_FOLDER = "assets";
 const SOURCE_FOLDER = "src";
 const PUBLIC = "public";
-const BUILD_FOLDER = "build";
+const BUILD_FOLDER = "dist";
 
 const DEVELOPMENT = "development";
 const PRODUCTION = "production";
 const { NODE_ENV } = process.env;
 const ENV_LIST = [DEVELOPMENT, PRODUCTION];
-const VALID_NODE_ENV =
-	NODE_ENV && ENV_LIST.includes(NODE_ENV) ? NODE_ENV : PRODUCTION;
+const VALID_NODE_ENV = NODE_ENV && ENV_LIST.includes(NODE_ENV) ? NODE_ENV : PRODUCTION;
 const IS_DEVELOPMENT = NODE_ENV === DEVELOPMENT;
 const IS_PRODUCTION = NODE_ENV === PRODUCTION;
 
