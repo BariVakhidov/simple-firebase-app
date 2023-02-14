@@ -1,4 +1,4 @@
-import React, { FC, memo } from "react";
+import React, { memo } from "react";
 import { Button, Input, Select, Space } from "antd";
 import { Form, Formik } from "formik";
 import { useTranslation } from "react-i18next";
@@ -19,7 +19,7 @@ interface Props {
 	setFilter: (values: Partial<SketchfabClientTypes.SearchModelsParams>) => void;
 }
 
-export const ModelsSearchForm: FC<Props> = memo(({ searchParams, categories, setFilter }) => {
+export const ModelsSearchForm = memo<Props>(({ searchParams, categories, setFilter }) => {
 	const dispatch = useAppDispatch();
 	const { t } = useTranslation("models");
 

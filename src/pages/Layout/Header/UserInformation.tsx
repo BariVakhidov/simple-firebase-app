@@ -1,4 +1,4 @@
-import React, { FC, memo } from "react";
+import React, { memo } from "react";
 import { Avatar, Button, Space } from "antd";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router";
@@ -16,7 +16,7 @@ interface Props {
 	user: Nullable<AppTypes.UserInfo>;
 }
 
-export const UserInformation: FC<Props> = memo(({ user }) => {
+export const UserInformation = memo<Props>(({ user }) => {
 	const navigate = useNavigate();
 	const dispatch = useAppDispatch();
 	const { t } = useTranslation("common");

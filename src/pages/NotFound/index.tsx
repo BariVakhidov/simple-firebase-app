@@ -1,12 +1,14 @@
-import React, { FC, memo } from "react";
+import React, { memo } from "react";
 
 import notFound from "@Assets/images/404.png";
 import { PageWrapper } from "@Components/pageWrapper";
 
-export const NotFound: FC = memo(() => {
+const NotFound = memo(() => {
 	return (
 		<PageWrapper center>
 			<img alt="" src={notFound} />
 		</PageWrapper>
 	);
 });
+
+export default NotFound;

@@ -1,4 +1,4 @@
-import React, { FC, memo, useCallback, useEffect, useState } from "react";
+import React, { memo, useCallback, useEffect, useState } from "react";
 import equal from "fast-deep-equal";
 import qs from "qs";
 import { useLocation, useSearchParams } from "react-router-dom";
@@ -15,7 +15,7 @@ import { ModelsList } from "@Pages/Models/ModelsList";
 import { ModelPopUp } from "@Pages/Models/PopUp/ModelPopUp";
 import { filterNonNull } from "@Utils/filterNonNull";
 
-export const Models: FC = memo(() => {
+const Models = memo(() => {
 	const dispatch = useAppDispatch();
 	const [selectedModel, setSelectedModel] = useState<Nullable<SketchfabClientTypes.Model>>(null);
 	const modelsSearch = useAppSelector(modelsSelectors.getModelsSearch);
@@ -80,3 +80,5 @@ export const Models: FC = memo(() => {
 		</PageWrapper>
 	);
 });
+
+export default Models;

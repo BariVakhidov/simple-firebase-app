@@ -1,4 +1,4 @@
-import React, { FC, memo } from "react";
+import React, { memo } from "react";
 import { Layout } from "antd";
 
 import { UserInformation } from "@/pages/Layout/Header/UserInformation";
@@ -11,7 +11,7 @@ import styles from "./Header.module.scss";
 
 const { Header } = Layout;
 
-export const AppHeader: FC = memo(() => {
+export const AppHeader = memo(() => {
 	const user = useAppSelector(appSelectors.getUser);
 
 	return (

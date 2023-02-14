@@ -1,4 +1,4 @@
-import React, { FC, memo } from "react";
+import React, { memo } from "react";
 import { Button, Form, Space } from "antd";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
@@ -15,7 +15,7 @@ import { FormWrapper } from "@Components/formWrapper";
 
 import styles from "./Login.module.scss";
 
-const Login: FC = memo(() => {
+const Login = memo(() => {
 	const dispatch = useAppDispatch();
 	const { t } = useTranslation("common");
 

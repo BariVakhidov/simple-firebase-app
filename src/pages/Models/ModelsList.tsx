@@ -1,4 +1,4 @@
-import React, { FC, memo, useCallback, useState } from "react";
+import React, { memo, useCallback, useState } from "react";
 import { Row } from "antd";
 import { useTranslation } from "react-i18next";
 
@@ -18,7 +18,7 @@ interface Props {
 	setSelectedModel: (model: SketchfabClientTypes.Model) => void;
 }
 
-export const ModelsList: FC<Props> = memo(({ modelsSearch, setSelectedModel }) => {
+export const ModelsList = memo<Props>(({ modelsSearch, setSelectedModel }) => {
 	const [isPopUpOpened, setIsPopUpOpened] = useState(false);
 	const userFavoritesModels = useAppSelector(modelsSelectors.getUserFavoritesModels);
 	const user = useAppSelector(appSelectors.getUser);

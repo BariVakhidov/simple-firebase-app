@@ -1,4 +1,4 @@
-import React, { FC, memo } from "react";
+import React, { memo } from "react";
 import { Avatar, Card, Col, Row } from "antd";
 import Meta from "antd/es/card/Meta";
 import { useTranslation } from "react-i18next";
@@ -15,7 +15,7 @@ interface Props {
 	userId: string;
 }
 
-export const FavoritesModels: FC<Props> = memo(({ userId }) => {
+export const FavoritesModels = memo<Props>(({ userId }) => {
 	const userFavoritesModels = useAppSelector(modelsSelectors.getUserFavoritesModels);
 	const dispatch = useAppDispatch();
 	const { t } = useTranslation("profile");

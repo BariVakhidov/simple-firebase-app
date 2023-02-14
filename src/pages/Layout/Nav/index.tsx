@@ -1,4 +1,4 @@
-import React, { FC, memo } from "react";
+import React, { memo } from "react";
 import { Menu } from "antd";
 import { useTranslation } from "react-i18next";
 import { useLocation } from "react-router";
@@ -10,7 +10,7 @@ import { useAppSelector } from "@/redux/store";
 
 import styles from "./Nav.module.scss";
 
-export const AppNav: FC = memo(() => {
+export const AppNav = memo(() => {
 	const location = useLocation();
 	const user = useAppSelector(appSelectors.getUser);
 	const { t } = useTranslation("common");

@@ -1,4 +1,4 @@
-import React, { FC, memo, useEffect, useRef } from "react";
+import React, { memo, useEffect, useRef } from "react";
 import { Modal, Space } from "antd";
 
 import { SketchfabClientTypes } from "@/client/SketchfabClient/sketchfabClient-types";
@@ -9,7 +9,7 @@ interface Props {
 	closeModal: () => void;
 }
 
-export const ModelPopUp: FC<Props> = memo(({ model, closeModal }) => {
+export const ModelPopUp = memo<Props>(({ model, closeModal }) => {
 	const viewerIframeRef = useRef(null);
 
 	useEffect(() => {

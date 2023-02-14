@@ -1,4 +1,4 @@
-import React, { FC, memo, useCallback, useState } from "react";
+import React, { memo, useCallback, useState } from "react";
 import { Col, Descriptions, Image, Row } from "antd";
 import { EditOutlined } from "@ant-design/icons";
 
@@ -20,7 +20,7 @@ const getUserInfo = (user: UserInfo) => {
 	return { email, photoURL, phoneNumber, displayName };
 };
 
-export const Profile: FC = memo(() => {
+export const Profile = memo(() => {
 	const [isEditMode, setEditMode] = useState(false);
 	const user = useAppSelector(appSelectors.getUser);
 	const isFetching = useAppSelector(appSelectors.getIsFetching);

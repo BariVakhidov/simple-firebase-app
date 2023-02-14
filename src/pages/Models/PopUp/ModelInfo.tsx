@@ -1,4 +1,4 @@
-import React, { FC, memo } from "react";
+import React, { memo } from "react";
 import { Avatar, Space } from "antd";
 import { EyeOutlined, LikeOutlined } from "@ant-design/icons";
 
@@ -10,7 +10,7 @@ interface Props {
 	model: SketchfabClientTypes.Model;
 }
 
-export const ModelInfo: FC<Props> = memo(({ model }) => {
+export const ModelInfo = memo<Props>(({ model }) => {
 	return (
 		<div className={styles.modelInfo}>
 			<Space>

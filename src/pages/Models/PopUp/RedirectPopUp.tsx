@@ -1,4 +1,4 @@
-import React, { FC, memo, useEffect } from "react";
+import React, { memo, useEffect } from "react";
 import { Button, Modal, Space } from "antd";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router";
@@ -11,7 +11,7 @@ interface Props {
 	onClose: () => void;
 }
 
-export const RedirectPopUp: FC<Props> = memo(({ onClose }) => {
+export const RedirectPopUp = memo<Props>(({ onClose }) => {
 	const navigate = useNavigate();
 	const { t } = useTranslation("models");
 

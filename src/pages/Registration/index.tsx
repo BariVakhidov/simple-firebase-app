@@ -1,4 +1,4 @@
-import React, { FC, memo } from "react";
+import React, { memo } from "react";
 import { Button, Form, Space } from "antd";
 import { useTranslation } from "react-i18next";
 
@@ -14,7 +14,7 @@ import { useAppDispatch } from "@/redux/store";
 import { FormInputItem } from "@Components/formItem/FormInputItem";
 import { FormWrapper } from "@Components/formWrapper";
 
-const Registration: FC = memo(() => {
+const Registration = memo(() => {
 	const dispatch = useAppDispatch();
 	const { t } = useTranslation("common");
 

@@ -1,4 +1,4 @@
-import React, { FC, memo } from "react";
+import React, { memo } from "react";
 import { Button, Col, Form, Input, Space } from "antd";
 import { useTranslation } from "react-i18next";
 import { CloseOutlined } from "@ant-design/icons";
@@ -19,7 +19,7 @@ const getEditInfo = (user: AppTypes.UserInfo) => {
 	return { email, photoURL, displayName };
 };
 
-export const EditInfo: FC<Props> = memo(({ user, deactivateEditMode, updateUser }) => {
+export const EditInfo = memo<Props>(({ user, deactivateEditMode, updateUser }) => {
 	const editableInfo = getEditInfo(user);
 	const { t } = useTranslation("common");
 

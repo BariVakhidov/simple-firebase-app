@@ -1,4 +1,4 @@
-import React, { FC, memo } from "react";
+import React, { memo } from "react";
 import { Avatar, Card, Col } from "antd";
 import Meta from "antd/es/card/Meta";
 import { HeartFilled, HeartOutlined } from "@ant-design/icons";
@@ -17,7 +17,7 @@ interface Props {
 	user: Nullable<AppTypes.UserInfo>;
 }
 
-export const Model: FC<Props> = memo(({ model, onModelClick, onChangeModelState, userFavoritesModels }) => {
+export const Model = memo<Props>(({ model, onModelClick, onChangeModelState, userFavoritesModels }) => {
 	const isFavorite = userFavoritesModels.find((i) => i.uid === model.uid);
 	const { uid, name, thumbnails } = model;
 	const imageUrl = thumbnails.images[0].url;

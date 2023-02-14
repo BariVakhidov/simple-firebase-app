@@ -1,4 +1,4 @@
-import React, { FC, memo, useEffect } from "react";
+import React, { FC, useEffect } from "react";
 import { Layout, Modal } from "antd";
 import cn from "classnames";
 import { useTranslation } from "react-i18next";
@@ -17,7 +17,7 @@ const { Content, Footer } = Layout;
 
 const currentYear = new Date().getFullYear();
 
-export const AppLayout: FC<WithChildren> = memo(({ children }) => {
+export const AppLayout: FC<WithChildren> = ({ children }) => {
 	const error = useAppSelector(appSelectors.getError);
 	const dispatch = useAppDispatch();
 	const { t } = useTranslation("common");
@@ -46,4 +46,4 @@ export const AppLayout: FC<WithChildren> = memo(({ children }) => {
 			<Footer className={styles.footer}>{t("footerText", { count: currentYear })}</Footer>
 		</Layout>
 	);
-});
+};
