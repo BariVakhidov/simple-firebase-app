@@ -1,4 +1,5 @@
-import React, { lazy, memo, Suspense } from "react";
+import React, { lazy, memo, Suspense, useEffect } from "react";
+import { useTranslation } from "react-i18next";
 import { Route, Routes } from "react-router-dom";
 import { ErrorBoundary, withSentryReactRouterV6Routing } from "@sentry/react";
 
@@ -19,6 +20,11 @@ const SentryRoutes = withSentryReactRouterV6Routing(Routes);
 
 export const App = memo(() => {
 	const user = useAppSelector(appSelectors.getUser);
+	const { i18n } = useTranslation();
+
+	useEffect(() => {
+		document.documentElement.lang = i18n.language;
+	}, [i18n.language]);
 
 	return (
 		<ErrorBoundary fallback={(errorData) => <ErrorFallback error={errorData.error} />}>

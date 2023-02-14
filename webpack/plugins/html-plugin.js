@@ -4,8 +4,9 @@ const path = require("path");
 const { ASSETS_FOLDER } = require("../utils/constants");
 
 const options = {
-	title: "Main",
+	title: "3D world",
 	template: path.join(ASSETS_FOLDER, "template/index.html"),
+	favicon: path.join(ASSETS_FOLDER, "template/icon.png"),
 };
 
 const getHtmlWebpackPlugin = () => {
