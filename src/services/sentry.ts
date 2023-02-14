@@ -16,5 +16,7 @@ init({
 			),
 		}),
 	],
+	environment: process.env.NODE_ENV,
+	normalizeDepth: 10,
 	tracesSampleRate: 1.0,
 });
