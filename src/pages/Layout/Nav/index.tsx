@@ -1,14 +1,20 @@
 import React, { FC, memo } from "react";
 import { Menu } from "antd";
+import { useTranslation } from "react-i18next";
 import { useLocation } from "react-router";
 import { Link } from "react-router-dom";
 
 import { Paths } from "@/constants/paths";
+import { appSelectors } from "@/redux/app/selectors";
+import { useAppSelector } from "@/redux/store";
 
 import styles from "./Nav.module.scss";
 
 export const AppNav: FC = memo(() => {
 	const location = useLocation();
+	const user = useAppSelector(appSelectors.getUser);
+	const { t } = useTranslation("common");
+
 	return (
 		<Menu
 			className={styles.menu}
@@ -17,8 +23,8 @@ export const AppNav: FC = memo(() => {
 			selectedKeys={[location.pathname]}
 			theme="dark"
 			items={[
-				{ key: Paths.MODELS, label: <Link to={Paths.MODELS}>Models</Link> },
-				{ key: Paths.PROFILE, label: <Link to={Paths.PROFILE}>Profile</Link> },
+				{ key: Paths.MODELS, label: <Link to={Paths.MODELS}>{t("nav.models")}</Link> },
+				{ key: Paths.PROFILE, label: <Link to={Paths.PROFILE}>{t("nav.profile")}</Link>, disabled: !user },
 			]}
 		/>
 	);

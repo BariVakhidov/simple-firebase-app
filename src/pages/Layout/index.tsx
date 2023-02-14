@@ -1,19 +1,26 @@
 import React, { FC, memo, useEffect } from "react";
 import { Layout, Modal } from "antd";
 import cn from "classnames";
+import { useTranslation } from "react-i18next";
+import { ErrorBoundary } from "@sentry/react";
 
 import { WithChildren } from "@/baseTypes";
 import { AppHeader } from "@/pages/Layout/Header";
 import { appActionCreators } from "@/redux/app/action-creators";
+import { appSelectors } from "@/redux/app/selectors";
 import { useAppDispatch, useAppSelector } from "@/redux/store";
+import ErrorFallback from "@Pages/ErrorFallback";
 
 import styles from "./Layout.module.scss";
 
 const { Content, Footer } = Layout;
 
+const currentYear = new Date().getFullYear();
+
 export const AppLayout: FC<WithChildren> = memo(({ children }) => {
-	const { error } = useAppSelector((state) => state.app);
+	const error = useAppSelector(appSelectors.getError);
 	const dispatch = useAppDispatch();
+	const { t } = useTranslation("common");
 
 	useEffect(() => {
 		if (error) {
@@ -31,10 +38,12 @@ export const AppLayout: FC<WithChildren> = memo(({ children }) => {
 	return (
 		<Layout className={styles.layout}>
 			<AppHeader />
-			<Content className="site-layout">
-				<div className={cn("site-layout-background", styles.content)}>{children}</div>
-			</Content>
-			<Footer className={styles.footer}>Simple firebase app ©2021 Created by Bari</Footer>
+			<ErrorBoundary fallback={(errorData) => <ErrorFallback error={errorData.error} />}>
+				<Content className="site-layout">
+					<div className={cn("site-layout-background", styles.content)}>{children}</div>
+				</Content>
+			</ErrorBoundary>
+			<Footer className={styles.footer}>{t("footerText", { count: currentYear })}</Footer>
 		</Layout>
 	);
 });

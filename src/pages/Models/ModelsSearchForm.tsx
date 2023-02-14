@@ -1,6 +1,7 @@
 import React, { FC, memo } from "react";
 import { Button, Input, Select, Space } from "antd";
 import { Form, Formik } from "formik";
+import { useTranslation } from "react-i18next";
 import { RollbackOutlined, SearchOutlined } from "@ant-design/icons";
 
 import { Nullable } from "@/baseTypes";
@@ -20,6 +21,8 @@ interface Props {
 
 export const ModelsSearchForm: FC<Props> = memo(({ searchParams, categories, setFilter }) => {
 	const dispatch = useAppDispatch();
+	const { t } = useTranslation("models");
+
 	const resetFilter = () => dispatch(modelsActionCreators.resetSearchParams());
 	return (
 		<Formik
@@ -43,7 +46,7 @@ export const ModelsSearchForm: FC<Props> = memo(({ searchParams, categories, set
 							value={values.categories}
 							onChange={(value) => setFilter({ ...values, categories: value })}
 						>
-							<Option value="">All categories</Option>
+							<Option value="">{t("allCategories")}</Option>
 							{categories &&
 								categories.map((i) => (
 									<Option key={i.uid} value={i.slug}>
@@ -51,9 +54,9 @@ export const ModelsSearchForm: FC<Props> = memo(({ searchParams, categories, set
 									</Option>
 								))}
 						</Select>
-						<Button htmlType="submit">Search</Button>
+						<Button htmlType="submit">{t("search")}</Button>
 						<Button icon={<RollbackOutlined />} onClick={resetFilter}>
-							Reset
+							{t("reset")}
 						</Button>
 					</Space>
 				</Form>

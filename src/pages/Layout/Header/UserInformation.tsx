@@ -1,5 +1,6 @@
 import React, { FC, memo } from "react";
 import { Avatar, Button, Space } from "antd";
+import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router";
 import { UserOutlined } from "@ant-design/icons";
 
@@ -18,13 +19,15 @@ interface Props {
 export const UserInformation: FC<Props> = memo(({ user }) => {
 	const navigate = useNavigate();
 	const dispatch = useAppDispatch();
+	const { t } = useTranslation("common");
+
 	const logout = () => dispatch(appActionCreators.logout());
 
 	if (!user) {
 		return (
 			<Space>
-				<Button onClick={() => navigate(Paths.LOGIN)}>Sign In</Button>
-				<Button onClick={() => navigate(Paths.REGISTRATION)}>Sign Up</Button>
+				<Button onClick={() => navigate(Paths.LOGIN)}>{t("signIn")}</Button>
+				<Button onClick={() => navigate(Paths.REGISTRATION)}>{t("signUp")}</Button>
 			</Space>
 		);
 	}
@@ -33,7 +36,7 @@ export const UserInformation: FC<Props> = memo(({ user }) => {
 		<Space>
 			<Avatar icon={!user.photoURL && <UserOutlined />} src={user.photoURL} />
 			<span className={styles.name}>{user.displayName}</span>
-			<Button onClick={logout}>Logout</Button>
+			<Button onClick={logout}>{t("logout")}</Button>
 		</Space>
 	);
 });

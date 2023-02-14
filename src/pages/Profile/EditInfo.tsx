@@ -1,5 +1,6 @@
 import React, { FC, memo } from "react";
 import { Button, Col, Form, Input, Space } from "antd";
+import { useTranslation } from "react-i18next";
 import { CloseOutlined } from "@ant-design/icons";
 
 import { AppTypes } from "@/redux/app/types";
@@ -20,6 +21,7 @@ const getEditInfo = (user: AppTypes.UserInfo) => {
 
 export const EditInfo: FC<Props> = memo(({ user, deactivateEditMode, updateUser }) => {
 	const editableInfo = getEditInfo(user);
+	const { t } = useTranslation("common");
 
 	return (
 		<>
@@ -39,7 +41,7 @@ export const EditInfo: FC<Props> = memo(({ user, deactivateEditMode, updateUser 
 					<Form.Item wrapperCol={{ offset: 5, span: 15 }}>
 						<Space>
 							<Button htmlType="submit" type="primary">
-								Save
+								{t("save")}
 							</Button>
 						</Space>
 					</Form.Item>

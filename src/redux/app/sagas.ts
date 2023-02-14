@@ -10,6 +10,7 @@ import { firebaseModels } from "@/firebaseApp/firebaseModels";
 import { firebaseUser } from "@/firebaseApp/firebaseUser";
 import { appActionCreators } from "@/redux/app/action-creators";
 import { AppActionTypes } from "@/redux/app/action-types";
+import { appSelectors } from "@/redux/app/selectors";
 import { AppTypes } from "@/redux/app/types";
 import { modelsActionCreators } from "@/redux/models/action-creators";
 import { ModelsTypes } from "@/redux/models/types";
@@ -95,7 +96,7 @@ export function* initialize() {
 
 function* updateUser(action: ReturnType<typeof appActionCreators.updateUser>) {
 	const { email, ...updatedParams } = action.payload;
-	const currentUser: AppTypes.UserInfo = yield select((state: AppState) => state.app.user);
+	const currentUser: AppTypes.UserInfo = yield select(appSelectors.getUser);
 	if (email && email !== currentUser.email) {
 		yield call(firebaseUser.updateUserEmail, email);
 	}

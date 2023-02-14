@@ -6,6 +6,7 @@ import { appActionCreators } from "@/redux/app/action-creators";
 import { appSaga } from "@/redux/app/sagas";
 import { modelsSaga } from "@/redux/models/sagas";
 import { AppState } from "@/redux/store";
+import { loggingService } from "@/services/loggingService";
 
 export function* rootSaga() {
 	yield fork(appSaga);
@@ -53,7 +54,7 @@ export function tryCatchSaga<A, K extends keyof AppState>(
 			}
 			yield call(saga, a);
 		} catch (error: unknown) {
-			console.log(error);
+			loggingService.handleError(error);
 			if (axios.isAxiosError(error)) yield put(appActionCreators.setError(getErrorMessage(error)));
 		} finally {
 			if (options?.withProgress) {

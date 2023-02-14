@@ -19,6 +19,7 @@ module.exports = {
 		"plugin:@typescript-eslint/recommended",
 		"plugin:import/typescript",
 		"plugin:react-hooks/recommended",
+		"plugin:i18next/recommended",
 		"prettier",
 	],
 	parser: "@typescript-eslint/parser",
@@ -34,7 +35,7 @@ module.exports = {
 		},
 		ecmaVersion: "latest",
 	},
-	plugins: ["@typescript-eslint", "react", "prettier", "import", "promise", "simple-import-sort"],
+	plugins: ["@typescript-eslint", "react", "prettier", "import", "promise", "simple-import-sort", "i18next"],
 	rules: {
 		"@typescript-eslint/no-namespace": "off",
 		"react/jsx-filename-extension": [1, { extensions: [".js", ".jsx", ".ts", ".tsx"] }],

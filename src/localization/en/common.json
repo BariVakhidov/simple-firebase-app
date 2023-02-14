@@ -1,0 +1,35 @@
+{
+  "login": {
+    "loginBtn": "Login",
+    "googleSignIn": "Sign in with Google",
+    "registration": "register now!"
+  },
+  "signIn": "Sign In",
+  "signUp": "Sign Up",
+  "logout": "Logout",
+  "or": "Or",
+  "footerText": "Simple firebase app ©{{count}} Created by Bari",
+  "reload": "Reload page",
+  "save": "Save",
+  "errors": {
+    "appError": "An error has occurred in the application",
+    "email": "The input is not valid E-mail!",
+    "emailRequired": "Please input your E-mail!",
+    "passwordRequired": "Please input your Password!",
+    "passwordInvalid": "Password must be min 6 symbols",
+    "passwordsMatching": "The two passwords that you entered do not match!"
+  },
+  "labels": {
+    "email": "Email",
+    "password": "Password",
+    "confirmPassword": "Confirm password"
+  },
+  "placeholders": {
+    "email": "Email",
+    "password": "Password"
+  },
+  "nav": {
+    "models": "Models",
+    "profile": "Profile"
+  }
+}

@@ -25,9 +25,9 @@ module.exports = (env) => {
 			entry: "./src/index.tsx",
 			output: {
 				path: path.resolve(__dirname, BUILD_FOLDER),
-				filename: "static/js/[name].[contenthash].js",
-				chunkFilename: "static/js/[name].[contenthash].js",
-				assetModuleFilename: "static/images/[hash][ext][query]",
+				filename: "js/[name].[contenthash].js",
+				chunkFilename: "js/[name].[contenthash].js",
+				assetModuleFilename: "images/[hash][ext][query]",
 				publicPath: "/",
 				clean: true,
 			},

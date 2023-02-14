@@ -27,8 +27,7 @@ export const modelsReducer: Reducer<ModelsTypes.ModelsState> = createReducer(ini
 			state.categories = action.payload;
 		})
 		.addCase(modelsActionCreators.resetSearchParams, (state) => {
-			const q = state.searchParams?.q ? state.searchParams.q : "";
-			state.searchParams = { q };
+			state.searchParams = { q: "" };
 		})
 		.addCase(modelsActionCreators.cleanup, (state) => {
 			state.modelsSearch = null;

@@ -1,5 +1,6 @@
 import React, { FC, memo } from "react";
 import { Button, Form, Space } from "antd";
+import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 import { GoogleOutlined } from "@ant-design/icons";
 
@@ -16,6 +17,7 @@ import styles from "./Login.module.scss";
 
 const Login: FC = memo(() => {
 	const dispatch = useAppDispatch();
+	const { t } = useTranslation("common");
 
 	const login = (values: AppTypes.UserAuthParams) => dispatch(appActionCreators.login(values));
 	const singInWithGoogle = () => dispatch(appActionCreators.signInWithGoogle());
@@ -33,15 +35,15 @@ const Login: FC = memo(() => {
 				<Form.Item wrapperCol={{ offset: 0, span: 16 }}>
 					<Space>
 						<Button htmlType="submit" type="primary">
-							Login
+							{t("login.loginBtn")}
 						</Button>
 						<Button onClick={singInWithGoogle}>
 							<GoogleOutlined />
-							Sign in with Google
+							{t("login.googleSignIn")}
 						</Button>
-						Or{" "}
+						{t("or")}
 						<Link className={styles.link} to={Paths.REGISTRATION}>
-							register now!
+							{t("login.registration")}
 						</Link>
 					</Space>
 				</Form.Item>

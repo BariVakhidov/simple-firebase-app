@@ -1,5 +1,8 @@
 import { NamePath, Rule } from "rc-field-form/es/interface";
 
+import { errorLabels } from "@/constants/errorLabels";
+import { labels } from "@/constants/labels";
+
 export const registrationItemLayout = {
 	labelCol: {
 		xs: { span: 24 },
@@ -34,48 +37,48 @@ interface RegistrationFormConfig {
 
 export const registrationFormConfig: RegistrationFormConfig[] = [
 	{
-		label: "Email",
 		name: "email",
+		label: labels.email,
 		rules: [
 			{
 				type: "email",
-				message: "The input is not valid E-mail!",
+				message: errorLabels.emailInvalid,
 			},
 			{
 				required: true,
-				message: "Please input your E-mail!",
+				message: errorLabels.emailRequired,
 			},
 		],
 	},
 	{
 		name: "password",
-		label: "Password",
+		label: labels.password,
 		rules: [
-			{ required: true, message: "Please input your Password!" },
+			{ required: true, message: errorLabels.passwordRequired },
 			{
 				min: 6,
-				message: "Password must be min 6 symbols",
+				message: errorLabels.passwordInvalid,
 			},
 		],
 		hasFeedback: true,
 	},
 	{
 		name: "confirm",
-		label: "Confirm Password",
+		label: labels.confirmPassword,
 		dependencies: ["password"],
 		hasFeedback: true,
 		rules: [
-			{ required: true, message: "Please input your Password!" },
+			{ required: true, message: errorLabels.passwordRequired },
 			{
 				min: 6,
-				message: "Password must be min 6 symbols",
+				message: errorLabels.passwordInvalid,
 			},
 			({ getFieldValue }) => ({
 				validator(_, value) {
 					if (!value || getFieldValue("password") === value) {
 						return Promise.resolve();
 					}
-					return Promise.reject(new Error("The two passwords that you entered do not match!"));
+					return Promise.reject(new Error(errorLabels.passwordsMatching));
 				},
 			}),
 		],

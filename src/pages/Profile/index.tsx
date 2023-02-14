@@ -5,6 +5,7 @@ import { EditOutlined } from "@ant-design/icons";
 import { EditInfo } from "@/pages/Profile/EditInfo";
 import { FavoritesModels } from "@/pages/Profile/FavoritesModels";
 import { appActionCreators } from "@/redux/app/action-creators";
+import { appSelectors } from "@/redux/app/selectors";
 import { AppTypes } from "@/redux/app/types";
 import { useAppDispatch, useAppSelector } from "@/redux/store";
 import avatar from "@Assets/images/no-photo.png";
@@ -21,7 +22,8 @@ const getUserInfo = (user: UserInfo) => {
 
 export const Profile: FC = memo(() => {
 	const [isEditMode, setEditMode] = useState(false);
-	const { user, isFetching } = useAppSelector((state) => state.app);
+	const user = useAppSelector(appSelectors.getUser);
+	const isFetching = useAppSelector(appSelectors.getIsFetching);
 	const dispatch = useAppDispatch();
 
 	const activateEditMode = useCallback(() => setEditMode(true), []);

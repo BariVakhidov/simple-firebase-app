@@ -1,0 +1,35 @@
+{
+  "login": {
+    "loginBtn": "Логин",
+    "googleSignIn": "Войти с помощью Google",
+    "registration": "зарегистрироваться сейчас!"
+  },
+  "signIn": "Войти",
+  "signUp": "Регистрация",
+  "logout": "Выйти",
+  "or": "или",
+  "footerText": "Simple firebase app ©{{count}} Created by Bari",
+  "reload": "Обновить страницу",
+  "save": "Сохранить",
+  "errors": {
+    "appError": "В приложении произошла ошибка",
+    "email": "Введенное значение не является корректным E-mail!",
+    "emailRequired": "Пожалуйста введите ваш E-mail!",
+    "passwordRequired": "Пожалуйста введите ваш пароль!",
+    "passwordInvalid": "Пароль должен быть не менее 6 символов",
+    "passwordsMatching": "Пароли не совпадают!"
+  },
+  "labels": {
+    "email": "Email",
+    "password": "Пароль",
+    "confirmPassword": "Подтвердите пароль"
+  },
+  "placeholders": {
+    "email": "Email",
+    "password": "Пароль"
+  },
+  "nav": {
+    "models": "Модели",
+    "profile": "Профиль"
+  }
+}

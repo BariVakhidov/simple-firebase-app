@@ -1,5 +1,6 @@
 import React, { FC, memo } from "react";
 import { Button, Form, Space } from "antd";
+import { useTranslation } from "react-i18next";
 
 import {
 	registrationFormConfig,
@@ -15,6 +16,7 @@ import { FormWrapper } from "@Components/formWrapper";
 
 const Registration: FC = memo(() => {
 	const dispatch = useAppDispatch();
+	const { t } = useTranslation("common");
 
 	const signUp = (values: AppTypes.UserAuthParams) => dispatch(appActionCreators.signUp(values));
 
@@ -33,7 +35,7 @@ const Registration: FC = memo(() => {
 				<Form.Item {...tailRegistrationItemLayout}>
 					<Space>
 						<Button htmlType="submit" type="primary">
-							Sign Up
+							{t("signUp")}
 						</Button>
 					</Space>
 				</Form.Item>

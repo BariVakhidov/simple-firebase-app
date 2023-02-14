@@ -1,4 +1,4 @@
-import React, { FC, memo } from "react";
+import React, { FC, memo, StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import { Provider } from "react-redux";
 import { BrowserRouter } from "react-router-dom";
@@ -9,6 +9,8 @@ import { store } from "@/redux/store";
 import "./style.css";
 
 import "@/utils/wdyr";
+import "@/services/sentry";
+import "@/localization/i18n";
 
 const rootElement = document.getElementById("root");
 
@@ -18,13 +20,13 @@ if (!rootElement) {
 
 const AppContainer: FC = memo(() => {
 	return (
-		<React.StrictMode>
+		<StrictMode>
 			<BrowserRouter>
 				<Provider store={store}>
 					<AppWrapper />
 				</Provider>
 			</BrowserRouter>
-		</React.StrictMode>
+		</StrictMode>
 	);
 });
 

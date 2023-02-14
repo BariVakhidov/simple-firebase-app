@@ -1,10 +1,12 @@
 import React, { FC, memo } from "react";
 import { Avatar, Card, Col, Row } from "antd";
 import Meta from "antd/es/card/Meta";
+import { useTranslation } from "react-i18next";
 import { HeartFilled } from "@ant-design/icons";
 
 import { SetFirebaseModelRequest } from "@/firebaseApp/types";
 import { modelsActionCreators } from "@/redux/models/action-creators";
+import { modelsSelectors } from "@/redux/models/selectors";
 import { useAppDispatch, useAppSelector } from "@/redux/store";
 
 import styles from "./FavoritesModels.module.scss";
@@ -14,11 +16,13 @@ interface Props {
 }
 
 export const FavoritesModels: FC<Props> = memo(({ userId }) => {
-	const { userFavoritesModels } = useAppSelector((state) => state.models);
+	const userFavoritesModels = useAppSelector(modelsSelectors.getUserFavoritesModels);
 	const dispatch = useAppDispatch();
+	const { t } = useTranslation("profile");
 	const onDelete = (params: SetFirebaseModelRequest) => dispatch(modelsActionCreators.changeModelCondition(params));
+
 	if (!userFavoritesModels.length) {
-		return <div>No favorites models</div>;
+		return <div>{t("emptyModels")}</div>;
 	}
 	return (
 		<Row className={styles.wrapper} gutter={[16, { xs: 8, sm: 16, md: 24, lg: 32 }]} justify="start">

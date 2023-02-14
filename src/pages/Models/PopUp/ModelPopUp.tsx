@@ -13,17 +13,20 @@ export const ModelPopUp: FC<Props> = memo(({ model, closeModal }) => {
 	const viewerIframeRef = useRef(null);
 
 	useEffect(() => {
-		// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-		// @ts-ignore
-		const client = new window.Sketchfab(viewerIframeRef.current);
-		client.init(model.uid, {
-			success: () => console.log("Viewer loaded"),
-			error: () => console.log("Viewer error"),
-		});
+		if (viewerIframeRef.current) {
+			// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+			// @ts-ignore
+			const client = new window.Sketchfab(viewerIframeRef.current);
+			client.init(model.uid, {
+				success: () => console.log("Viewer loaded"),
+				error: () => console.log("Viewer error"),
+			});
+		}
 	}, [model.uid]);
 
 	return (
 		<Modal
+			open
 			footer={null}
 			style={{ display: "flex", alignItems: "center", justifyContent: "center" }}
 			title={model.name}
@@ -31,9 +34,8 @@ export const ModelPopUp: FC<Props> = memo(({ model, closeModal }) => {
 		>
 			<Space align={"start"}>
 				<iframe
-					// We feed the ref to the iframe component to get the underlying DOM object
 					ref={viewerIframeRef}
-					style={{ height: 400, width: 600 }}
+					style={{ height: 400, width: 600, border: "none" }}
 					title="sketchfab-viewer"
 				/>
 				<ModelInfo model={model} />

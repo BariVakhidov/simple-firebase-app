@@ -3,6 +3,9 @@ import { InputProps } from "antd/lib/input/Input";
 import { Rule } from "rc-field-form/es/interface";
 import { LockOutlined, UserOutlined } from "@ant-design/icons";
 
+import { errorLabels } from "@/constants/errorLabels";
+import { placeholders } from "@/constants/placeholders";
+
 interface LoginFormItemProps {
 	name: string;
 	rules: Rule[];
@@ -20,34 +23,34 @@ export const loginFormConfig: LoginFormConfig[] = [
 			rules: [
 				{
 					type: "email",
-					message: "The input is not valid E-mail!",
+					message: errorLabels.emailInvalid,
 				},
 				{
 					required: true,
-					message: "Please input your E-mail!",
+					message: errorLabels.emailRequired,
 				},
 			],
 		},
 		inputConfig: {
 			prefix: <UserOutlined className="site-form-item-icon" />,
-			placeholder: "Email",
+			placeholder: placeholders.email,
 		},
 	},
 	{
 		formItemConfig: {
 			name: "password",
 			rules: [
-				{ required: true, message: "Please input your Password!" },
+				{ required: true, message: errorLabels.passwordRequired },
 				{
 					min: 6,
-					message: "Password must be min 6 symbols",
+					message: errorLabels.passwordInvalid,
 				},
 			],
 		},
 		inputConfig: {
 			prefix: <LockOutlined className="site-form-item-icon" />,
 			type: "password",
-			placeholder: "Password",
+			placeholder: placeholders.password,
 		},
 	},
 ];

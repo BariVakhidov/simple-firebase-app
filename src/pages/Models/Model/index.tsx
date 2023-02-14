@@ -22,6 +22,7 @@ export const Model: FC<Props> = memo(({ model, onModelClick, onChangeModelState,
 	const { uid, name, thumbnails } = model;
 	const imageUrl = thumbnails.images[0].url;
 	const userAvatarUrl = model.user.avatar.images[0].url;
+
 	const onAction = (e: React.MouseEvent<HTMLSpanElement, MouseEvent>) => {
 		e.stopPropagation();
 		onChangeModelState({ uid, name, imageUrl, userAvatarUrl });

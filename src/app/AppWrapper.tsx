@@ -3,11 +3,13 @@ import { Spin } from "antd";
 
 import { App } from "@/app/App";
 import { appActionCreators } from "@/redux/app/action-creators";
+import { appSelectors } from "@/redux/app/selectors";
 import { modelsActionCreators } from "@/redux/models/action-creators";
 import { useAppDispatch, useAppSelector } from "@/redux/store";
-//3
+
 export const AppWrapper: FC = memo(() => {
-	const { initialized, user } = useAppSelector((state) => state.app);
+	const user = useAppSelector(appSelectors.getUser);
+	const initialized = useAppSelector(appSelectors.getIsInitialized);
 	const dispatch = useAppDispatch();
 
 	useEffect(() => {

@@ -5,7 +5,10 @@ import { SetFirebaseModelRequest } from "@/firebaseApp/types";
 
 export const firebaseModels = {
 	getModels(userId: string) {
-		return getDoc(doc(db, "users", userId)).then((response) => response.data());
+		const docRef = doc(db, "users", userId);
+		// eslint-disable-next-line no-debugger
+		debugger;
+		return getDoc(docRef).then((response) => response.data());
 	},
 
 	setModel(params: SetFirebaseModelRequest) {

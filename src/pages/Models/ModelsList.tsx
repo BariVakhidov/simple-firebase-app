@@ -1,11 +1,14 @@
 import React, { FC, memo, useCallback, useState } from "react";
 import { Row } from "antd";
+import { useTranslation } from "react-i18next";
 
 import { Nullable } from "@/baseTypes";
 import { SketchfabClientTypes } from "@/client/SketchfabClient/sketchfabClient-types";
 import { Model } from "@/pages/Models/Model";
 import { RedirectPopUp } from "@/pages/Models/PopUp/RedirectPopUp";
+import { appSelectors } from "@/redux/app/selectors";
 import { modelsActionCreators } from "@/redux/models/action-creators";
+import { modelsSelectors } from "@/redux/models/selectors";
 import { ModelsTypes } from "@/redux/models/types";
 import { useAppDispatch, useAppSelector } from "@/redux/store";
 import FavoriteModel = ModelsTypes.FavoriteModel;
@@ -17,9 +20,11 @@ interface Props {
 
 export const ModelsList: FC<Props> = memo(({ modelsSearch, setSelectedModel }) => {
 	const [isPopUpOpened, setIsPopUpOpened] = useState(false);
-	const { userFavoritesModels } = useAppSelector((state) => state.models);
-	const { user } = useAppSelector((state) => state.app);
+	const userFavoritesModels = useAppSelector(modelsSelectors.getUserFavoritesModels);
+	const user = useAppSelector(appSelectors.getUser);
 	const dispatch = useAppDispatch();
+	const { t } = useTranslation("models");
+
 	const onChangeModelState = useCallback(
 		(model: FavoriteModel) => {
 			if (user) {
@@ -31,12 +36,13 @@ export const ModelsList: FC<Props> = memo(({ modelsSearch, setSelectedModel }) =
 		[dispatch, user]
 	);
 	const onPopUpClose = () => setIsPopUpOpened(false);
+
 	if (!modelsSearch) {
 		return null;
 	}
 
 	if (!modelsSearch.results.length) {
-		return <div>No results</div>;
+		return <div>{t("emptyResults")}</div>;
 	}
 
 	return (
