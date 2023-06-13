@@ -8,7 +8,7 @@ import { loginFormConfig } from "@/constants/loginFormConfig";
 import { Paths } from "@/constants/paths";
 import { withAuthRedirect } from "@/hoc/withAuthRedirect";
 import { appActionCreators } from "@/redux/app/action-creators";
-import { AppTypes } from "@/redux/app/types";
+import type { UserAuthParams } from "@/redux/app/types";
 import { useAppDispatch } from "@/redux/store";
 import { FormInputItem } from "@Components/formItem/FormInputItem";
 import { FormWrapper } from "@Components/formWrapper";
@@ -19,7 +19,7 @@ const Login = memo(() => {
 	const dispatch = useAppDispatch();
 	const { t } = useTranslation("common");
 
-	const login = (values: AppTypes.UserAuthParams) => dispatch(appActionCreators.login(values));
+	const login = (values: UserAuthParams) => dispatch(appActionCreators.login(values));
 	const singInWithGoogle = () => dispatch(appActionCreators.signInWithGoogle());
 
 	return (

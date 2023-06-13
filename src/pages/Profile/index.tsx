@@ -6,14 +6,13 @@ import { EditInfo } from "@/pages/Profile/EditInfo";
 import { FavoritesModels } from "@/pages/Profile/FavoritesModels";
 import { appActionCreators } from "@/redux/app/action-creators";
 import { appSelectors } from "@/redux/app/selectors";
-import { AppTypes } from "@/redux/app/types";
+import type { EditableInfo, UserInfo } from "@/redux/app/types";
 import { useAppDispatch, useAppSelector } from "@/redux/store";
 import avatar from "@Assets/images/no-photo.png";
 import { PageWrapper } from "@Components/pageWrapper";
 import { Preloader } from "@Components/preloader";
 
 import styles from "./Profile.module.scss";
-import UserInfo = AppTypes.UserInfo;
 
 const getUserInfo = (user: UserInfo) => {
 	const { email, photoURL, phoneNumber, displayName } = user;
@@ -29,7 +28,7 @@ export const Profile = memo(() => {
 	const activateEditMode = useCallback(() => setEditMode(true), []);
 	const deactivateEditMode = useCallback(() => setEditMode(false), []);
 	const updateUser = useCallback(
-		(values: AppTypes.EditableInfo) => {
+		(values: EditableInfo) => {
 			dispatch(appActionCreators.updateUser(values));
 			setEditMode(false);
 		},

@@ -4,8 +4,8 @@ import { Form, Formik } from "formik";
 import { useTranslation } from "react-i18next";
 import { RollbackOutlined, SearchOutlined } from "@ant-design/icons";
 
-import { Nullable } from "@/baseTypes";
-import { SketchfabClientTypes } from "@/client/SketchfabClient/sketchfabClient-types";
+import type { Nullable } from "@/baseTypes";
+import type { Category, SearchModelsParams } from "@/client/SketchfabClient/sketchfabClient-types";
 import { modelsActionCreators } from "@/redux/models/action-creators";
 import { useAppDispatch } from "@/redux/store";
 
@@ -14,9 +14,9 @@ import styles from "./Models.module.scss";
 const { Option } = Select;
 
 interface Props {
-	searchParams: Nullable<Partial<SketchfabClientTypes.SearchModelsParams>>;
-	categories: Nullable<SketchfabClientTypes.Category[]>;
-	setFilter: (values: Partial<SketchfabClientTypes.SearchModelsParams>) => void;
+	searchParams: Nullable<Partial<SearchModelsParams>>;
+	categories: Nullable<Category[]>;
+	setFilter: (values: Partial<SearchModelsParams>) => void;
 }
 
 export const ModelsSearchForm = memo<Props>(({ searchParams, categories, setFilter }) => {

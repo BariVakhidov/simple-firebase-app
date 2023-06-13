@@ -1,9 +1,9 @@
 import { createReducer, Reducer } from "@reduxjs/toolkit";
 
 import { modelsActionCreators } from "@/redux/models/action-creators";
-import { ModelsTypes } from "@/redux/models/types";
+import type { ModelsState } from "@/redux/models/types";
 
-const initialState: Readonly<ModelsTypes.ModelsState> = {
+const initialState: Readonly<ModelsState> = {
 	modelsSearch: null,
 	searchParams: {},
 	categories: null,
@@ -12,7 +12,7 @@ const initialState: Readonly<ModelsTypes.ModelsState> = {
 	error: null,
 };
 
-export const modelsReducer: Reducer<ModelsTypes.ModelsState> = createReducer(initialState, (builder) => {
+export const modelsReducer: Reducer<ModelsState> = createReducer(initialState, (builder) => {
 	builder
 		.addCase(modelsActionCreators.setFetching, (state, action) => {
 			state.isFetching = action.payload;

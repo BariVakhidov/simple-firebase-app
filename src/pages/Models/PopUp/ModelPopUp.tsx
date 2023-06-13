@@ -1,11 +1,11 @@
 import React, { memo, useEffect, useRef } from "react";
 import { Modal, Space } from "antd";
 
-import { SketchfabClientTypes } from "@/client/SketchfabClient/sketchfabClient-types";
+import type { Model } from "@/client/SketchfabClient/sketchfabClient-types";
 import { ModelInfo } from "@/pages/Models/PopUp/ModelInfo";
 
 interface Props {
-	model: SketchfabClientTypes.Model;
+	model: Model;
 	closeModal: () => void;
 }
 

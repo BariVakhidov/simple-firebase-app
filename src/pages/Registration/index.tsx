@@ -9,7 +9,7 @@ import {
 } from "@/constants/registrationFormConfig";
 import { withAuthRedirect } from "@/hoc/withAuthRedirect";
 import { appActionCreators } from "@/redux/app/action-creators";
-import { AppTypes } from "@/redux/app/types";
+import type { UserAuthParams } from "@/redux/app/types";
 import { useAppDispatch } from "@/redux/store";
 import { FormInputItem } from "@Components/formItem/FormInputItem";
 import { FormWrapper } from "@Components/formWrapper";
@@ -18,7 +18,7 @@ const Registration = memo(() => {
 	const dispatch = useAppDispatch();
 	const { t } = useTranslation("common");
 
-	const signUp = (values: AppTypes.UserAuthParams) => dispatch(appActionCreators.signUp(values));
+	const signUp = (values: UserAuthParams) => dispatch(appActionCreators.signUp(values));
 
 	return (
 		<FormWrapper>

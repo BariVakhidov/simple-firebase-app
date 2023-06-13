@@ -1,9 +1,9 @@
 import { createReducer, Reducer } from "@reduxjs/toolkit";
 
 import { appActionCreators } from "@/redux/app/action-creators";
-import { AppTypes } from "@/redux/app/types";
+import type { AppState } from "@/redux/app/types";
 
-const initialState: Readonly<AppTypes.AppState> = {
+const initialState: Readonly<AppState> = {
 	user: null,
 	isAuth: false,
 	initialized: false,
@@ -11,7 +11,7 @@ const initialState: Readonly<AppTypes.AppState> = {
 	error: null,
 };
 
-export const appReducer: Reducer<AppTypes.AppState> = createReducer(initialState, (builder) => {
+export const appReducer: Reducer<AppState> = createReducer(initialState, (builder) => {
 	builder
 		.addCase(appActionCreators.setFetching, (state, action) => {
 			state.isFetching = action.payload;

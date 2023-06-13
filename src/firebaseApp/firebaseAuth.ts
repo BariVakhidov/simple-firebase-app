@@ -7,15 +7,15 @@ import {
 } from "firebase/auth";
 
 import { appAuth } from "@/firebaseApp/index";
-import { AppTypes } from "@/redux/app/types";
+import type { UserAuthParams } from "@/redux/app/types";
 
 export const firebaseAuth = {
-	signInWithCredentials(params: AppTypes.UserAuthParams) {
+	signInWithCredentials(params: UserAuthParams) {
 		const { email, password } = params;
 		return signInWithEmailAndPassword(appAuth, email, password).then((userCredential) => userCredential.user);
 	},
 
-	createUser(params: AppTypes.UserAuthParams) {
+	createUser(params: UserAuthParams) {
 		const { email, password } = params;
 		return createUserWithEmailAndPassword(appAuth, email, password).then((userCredential) => userCredential.user);
 	},

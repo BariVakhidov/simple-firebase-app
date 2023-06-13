@@ -2,12 +2,12 @@ import React, { memo } from "react";
 import { Avatar, Space } from "antd";
 import { EyeOutlined, LikeOutlined } from "@ant-design/icons";
 
-import { SketchfabClientTypes } from "@/client/SketchfabClient/sketchfabClient-types";
+import type { Model } from "@/client/SketchfabClient/sketchfabClient-types";
 
 import styles from "./PopUp.module.scss";
 
 interface Props {
-	model: SketchfabClientTypes.Model;
+	model: Model;
 }
 
 export const ModelInfo = memo<Props>(({ model }) => {

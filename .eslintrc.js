@@ -37,7 +37,6 @@ module.exports = {
 	},
 	plugins: ["@typescript-eslint", "react", "prettier", "import", "promise", "simple-import-sort", "i18next"],
 	rules: {
-		"@typescript-eslint/no-namespace": "off",
 		"react/jsx-filename-extension": [1, { extensions: [".js", ".jsx", ".ts", ".tsx"] }],
 		"react/jsx-sort-props": [
 			"error",
