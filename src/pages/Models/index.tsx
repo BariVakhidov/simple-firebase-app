@@ -8,7 +8,7 @@ import { ModelsSearchForm } from "@/pages/Models/ModelsSearchForm";
 import { modelsActionCreators } from "@/redux/models/action-creators";
 import { modelsSelectors } from "@/redux/models/selectors";
 import { useAppDispatch, useAppSelector } from "@/redux/store";
-import { SketchfabClientTypes } from "@Client/SketchfabClient/sketchfabClient-types";
+import type { Model, SearchModelsParams } from "@Client/SketchfabClient/sketchfabClient-types";
 import { Loader } from "@Components/loader";
 import { PageWrapper } from "@Components/pageWrapper";
 import { ModelsList } from "@Pages/Models/ModelsList";
@@ -17,7 +17,7 @@ import { filterNonNull } from "@Utils/filterNonNull";
 
 const Models = memo(() => {
 	const dispatch = useAppDispatch();
-	const [selectedModel, setSelectedModel] = useState<Nullable<SketchfabClientTypes.Model>>(null);
+	const [selectedModel, setSelectedModel] = useState<Nullable<Model>>(null);
 	const modelsSearch = useAppSelector(modelsSelectors.getModelsSearch);
 	const searchParams = useAppSelector(modelsSelectors.getSearchParams);
 	const categories = useAppSelector(modelsSelectors.getCategories);
@@ -26,15 +26,14 @@ const Models = memo(() => {
 	const { search } = useLocation();
 
 	const setFilter = useCallback(
-		(filter: Partial<SketchfabClientTypes.SearchModelsParams>) =>
-			dispatch(modelsActionCreators.setSearchParams(filter)),
+		(filter: Partial<SearchModelsParams>) => dispatch(modelsActionCreators.setSearchParams(filter)),
 		[dispatch]
 	);
 
 	useEffect(() => {
 		const parsed = qs.parse(search, {
 			ignoreQueryPrefix: true,
-		}) as Partial<SketchfabClientTypes.SearchModelsParams>;
+		}) as Partial<SearchModelsParams>;
 		if (!equal(parsed, searchParams)) {
 			setFilter(parsed);
 		}
@@ -44,7 +43,7 @@ const Models = memo(() => {
 	useEffect(() => {
 		const parsed = qs.parse(search, {
 			ignoreQueryPrefix: true,
-		}) as Partial<SketchfabClientTypes.SearchModelsParams>;
+		}) as Partial<SearchModelsParams>;
 
 		if (searchParams && Object.values(searchParams).length) {
 			dispatch(modelsActionCreators.getModels(searchParams));

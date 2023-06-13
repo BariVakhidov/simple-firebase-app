@@ -3,21 +3,20 @@ import { Avatar, Card, Col } from "antd";
 import Meta from "antd/es/card/Meta";
 import { HeartFilled, HeartOutlined } from "@ant-design/icons";
 
-import { Nullable } from "@/baseTypes";
-import { SketchfabClientTypes } from "@/client/SketchfabClient/sketchfabClient-types";
-import { AppTypes } from "@/redux/app/types";
-import { ModelsTypes } from "@/redux/models/types";
-import FavoriteModel = ModelsTypes.FavoriteModel;
+import type { Nullable } from "@/baseTypes";
+import type { Model } from "@/client/SketchfabClient/sketchfabClient-types";
+import type { UserInfo } from "@/redux/app/types";
+import type { FavoriteModel } from "@/redux/models/types";
 
 interface Props {
-	model: SketchfabClientTypes.Model;
-	onModelClick: (model: SketchfabClientTypes.Model) => void;
+	model: Model;
+	onModelClick: (model: Model) => void;
 	onChangeModelState: (model: FavoriteModel) => void;
-	userFavoritesModels: ModelsTypes.FavoriteModel[];
-	user: Nullable<AppTypes.UserInfo>;
+	userFavoritesModels: FavoriteModel[];
+	user: Nullable<UserInfo>;
 }
 
-export const Model = memo<Props>(({ model, onModelClick, onChangeModelState, userFavoritesModels }) => {
+export const ModelComponent = memo<Props>(({ model, onModelClick, onChangeModelState, userFavoritesModels }) => {
 	const isFavorite = userFavoritesModels.find((i) => i.uid === model.uid);
 	const { uid, name, thumbnails } = model;
 	const imageUrl = thumbnails.images[0].url;

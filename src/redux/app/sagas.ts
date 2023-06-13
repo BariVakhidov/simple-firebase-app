@@ -3,7 +3,7 @@ import { doc, DocumentData, onSnapshot } from "firebase/firestore";
 import { EventChannel, eventChannel } from "redux-saga";
 import { all, call, fork, put, race, select, take, takeLatest } from "@redux-saga/core/effects";
 
-import { Nullable } from "@/baseTypes";
+import type { Nullable } from "@/baseTypes";
 import { appAuth, db } from "@/firebaseApp";
 import { firebaseAuth } from "@/firebaseApp/firebaseAuth";
 import { firebaseModels } from "@/firebaseApp/firebaseModels";
@@ -11,11 +11,11 @@ import { firebaseUser } from "@/firebaseApp/firebaseUser";
 import { appActionCreators } from "@/redux/app/action-creators";
 import { AppActionTypes } from "@/redux/app/action-types";
 import { appSelectors } from "@/redux/app/selectors";
-import { AppTypes } from "@/redux/app/types";
+import type { UserInfo } from "@/redux/app/types";
 import { modelsActionCreators } from "@/redux/models/action-creators";
-import { ModelsTypes } from "@/redux/models/types";
+import type { FavoriteModel } from "@/redux/models/types";
 import { tryCatchSaga, TryCatchSagaOptions } from "@/redux/sagas";
-import { AppState } from "@/redux/store";
+import type { AppState } from "@/redux/store";
 import { getUserInfo } from "@/utils/getUserInfo";
 
 const tryCatchSagaOptions: TryCatchSagaOptions<keyof AppState> = {
@@ -47,10 +47,10 @@ function createModelsChanel(userId: string) {
 }
 
 function* modelsStateWatcher(userId: string) {
-	const modelsChannel: EventChannel<ModelsTypes.FavoriteModel> = yield call(createModelsChanel, userId);
+	const modelsChannel: EventChannel<FavoriteModel> = yield call(createModelsChanel, userId);
 	try {
 		while (true) {
-			const response: ModelsTypes.FavoriteModel[] = yield take(modelsChannel);
+			const response: FavoriteModel[] = yield take(modelsChannel);
 			yield put(modelsActionCreators.setFavoritesModels(response));
 		}
 	} finally {
@@ -65,7 +65,7 @@ function* userStateWatcher() {
 		let initialized = false;
 		while (true) {
 			const user: User | "" = yield take(userChannel);
-			let userInfo: Nullable<AppTypes.UserInfo> = null;
+			let userInfo: Nullable<UserInfo> = null;
 			if (user) {
 				userInfo = getUserInfo(user);
 			}
@@ -96,7 +96,7 @@ export function* initialize() {
 
 function* updateUser(action: ReturnType<typeof appActionCreators.updateUser>) {
 	const { email, ...updatedParams } = action.payload;
-	const currentUser: AppTypes.UserInfo = yield select(appSelectors.getUser);
+	const currentUser: UserInfo = yield select(appSelectors.getUser);
 	if (email && email !== currentUser.email) {
 		yield call(firebaseUser.updateUserEmail, email);
 	}

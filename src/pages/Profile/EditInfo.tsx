@@ -3,18 +3,18 @@ import { Button, Col, Form, Input, Space } from "antd";
 import { useTranslation } from "react-i18next";
 import { CloseOutlined } from "@ant-design/icons";
 
-import { AppTypes } from "@/redux/app/types";
+import type { EditableInfo, UserInfo } from "@/redux/app/types";
 import { capitalizeFirstLetter } from "@Utils/capitalizeFirstLetter";
 
 import styles from "./Profile.module.scss";
 
 interface Props {
-	user: AppTypes.UserInfo;
+	user: UserInfo;
 	deactivateEditMode: () => void;
-	updateUser: (values: AppTypes.EditableInfo) => void;
+	updateUser: (values: EditableInfo) => void;
 }
 
-const getEditInfo = (user: AppTypes.UserInfo) => {
+const getEditInfo = (user: UserInfo) => {
 	const { email, photoURL, displayName } = user;
 	return { email, photoURL, displayName };
 };

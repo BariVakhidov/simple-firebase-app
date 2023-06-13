@@ -1,20 +1,22 @@
-import { Nullable } from "@/baseTypes";
-import { SketchfabClientTypes } from "@/client/SketchfabClient/sketchfabClient-types";
+import type { Nullable } from "@/baseTypes";
+import type {
+	Category,
+	SearchModelsParams,
+	SearchModelsResponse,
+} from "@/client/SketchfabClient/sketchfabClient-types";
 
-export namespace ModelsTypes {
-	export interface FavoriteModel {
-		uid: string;
-		imageUrl: string;
-		name: string;
-		userAvatarUrl: string;
-	}
+export interface FavoriteModel {
+	uid: string;
+	imageUrl: string;
+	name: string;
+	userAvatarUrl: string;
+}
 
-	export interface ModelsState {
-		modelsSearch: Nullable<SketchfabClientTypes.SearchModelsResponse>;
-		userFavoritesModels: FavoriteModel[];
-		searchParams: Nullable<Partial<SketchfabClientTypes.SearchModelsParams>>;
-		categories: Nullable<SketchfabClientTypes.Category[]>;
-		isFetching: boolean;
-		error: Nullable<string>;
-	}
+export interface ModelsState {
+	modelsSearch: Nullable<SearchModelsResponse>;
+	userFavoritesModels: FavoriteModel[];
+	searchParams: Nullable<Partial<SearchModelsParams>>;
+	categories: Nullable<Category[]>;
+	isFetching: boolean;
+	error: Nullable<string>;
 }

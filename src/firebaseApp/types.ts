@@ -1,10 +1,10 @@
-import { ModelsTypes } from "@/redux/models/types";
+import type { FavoriteModel } from "@/redux/models/types";
 
 export interface FirebaseModelsDto {
-	favoritesModels: ModelsTypes.FavoriteModel[];
+	favoritesModels: FavoriteModel[];
 }
 
 export interface SetFirebaseModelRequest {
 	userId: string;
-	model: ModelsTypes.FavoriteModel;
+	model: FavoriteModel;
 }

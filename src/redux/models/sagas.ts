@@ -1,15 +1,19 @@
 import { all, call, put, select, takeLatest } from "@redux-saga/core/effects";
 
 import { sketchfabClient } from "@/client/SketchfabClient";
-import { SketchfabClientTypes } from "@/client/SketchfabClient/sketchfabClient-types";
+import type {
+	CategoriesResponse,
+	Cursors,
+	SearchModelsParams,
+	SearchModelsResponse,
+} from "@/client/SketchfabClient/sketchfabClient-types";
 import { firebaseModels } from "@/firebaseApp/firebaseModels";
 import { modelsActionCreators } from "@/redux/models/action-creators";
 import { ModelsActionTypes } from "@/redux/models/action-types";
 import { modelsSelectors } from "@/redux/models/selectors";
-import { ModelsTypes } from "@/redux/models/types";
+import type { FavoriteModel } from "@/redux/models/types";
 import { tryCatchSaga, TryCatchSagaOptions } from "@/redux/sagas";
-import { AppState } from "@/redux/store";
-import FavoriteModel = ModelsTypes.FavoriteModel;
+import type { AppState } from "@/redux/store";
 
 const tryCatchSagaOptions: TryCatchSagaOptions<keyof AppState> = {
 	withProgress: true,
@@ -18,12 +22,12 @@ const tryCatchSagaOptions: TryCatchSagaOptions<keyof AppState> = {
 };
 
 function* getCategories() {
-	const categories: SketchfabClientTypes.CategoriesResponse = yield call(sketchfabClient.getCategories);
+	const categories: CategoriesResponse = yield call(sketchfabClient.getCategories);
 	yield put(modelsActionCreators.setCategories(categories.results));
 }
 
 function* getModels(action: ReturnType<typeof modelsActionCreators.getModels>) {
-	const response: SketchfabClientTypes.SearchModelsResponse = yield call(sketchfabClient.getModels, action.payload);
+	const response: SearchModelsResponse = yield call(sketchfabClient.getModels, action.payload);
 	response.results.forEach((i) => i.thumbnails.images.sort((a, b) => b.width - a.width));
 	yield put(modelsActionCreators.setModels(response));
 }
@@ -38,10 +42,10 @@ function* changeModelCondition(action: ReturnType<typeof modelsActionCreators.ch
 }
 
 function* loadMore() {
-	const cursors: SketchfabClientTypes.Cursors = yield select(modelsSelectors.getCursors);
+	const cursors: Cursors = yield select(modelsSelectors.getCursors);
 	if (cursors.next) {
-		const params: SketchfabClientTypes.SearchModelsParams = yield select(modelsSelectors.getSearchParams);
-		const response: SketchfabClientTypes.SearchModelsResponse = yield call(() =>
+		const params: SearchModelsParams = yield select(modelsSelectors.getSearchParams);
+		const response: SearchModelsResponse = yield call(() =>
 			sketchfabClient.getModels({
 				...params,
 				count: 24,

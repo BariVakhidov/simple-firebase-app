@@ -4,16 +4,16 @@ import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router";
 import { UserOutlined } from "@ant-design/icons";
 
-import { Nullable } from "@/baseTypes";
+import type { Nullable } from "@/baseTypes";
 import { Paths } from "@/constants/paths";
 import { appActionCreators } from "@/redux/app/action-creators";
-import { AppTypes } from "@/redux/app/types";
+import type { UserInfo } from "@/redux/app/types";
 import { useAppDispatch } from "@/redux/store";
 
 import styles from "./Header.module.scss";
 
 interface Props {
-	user: Nullable<AppTypes.UserInfo>;
+	user: Nullable<UserInfo>;
 }
 
 export const UserInformation = memo<Props>(({ user }) => {
